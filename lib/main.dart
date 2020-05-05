@@ -1,4 +1,5 @@
 import 'package:bubbletest/test.dart';
+import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -54,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _index = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -78,88 +80,192 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text("Bubble"
+        title: Text("Bubble",
+          style: TextStyle(fontStyle: FontStyle.italic),
         ),
-        centerTitle: true,
+        elevation: 10,        
         actions: [
-          Icon(Icons.access_alarm),
-          Icon(Icons.add_box),
-          Icon(Icons.attachment)
+          Icon(Icons.search),
+          Icon(Icons.location_on)         
           
         ],     
         
         
       
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
+      // body: Center(
+      //   // Center is a layout widget. It takes a single child and positions it
+      //   // in the middle of the parent.
+      //   child: Column(
+      //     // Column is also a layout widget. It takes a list of children and
+      //     // arranges them vertically. By default, it sizes itself to fit its
+      //     // children horizontally, and tries to be as tall as its parent.
+      //     //
+      //     // Invoke "debug painting" (press "p" in the console, choose the
+      //     // "Toggle Debug Paint" action from the Flutter Inspector in Android
+      //     // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+      //     // to see the wireframe for each widget.
+      //     //
+      //     // Column has various properties to control how it sizes itself and
+      //     // how it positions its children. Here we use mainAxisAlignment to
+      //     // center the children vertically; the main axis here is the vertical
+      //     // axis because Columns are vertical (the cross axis would be
+      //     // horizontal).
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       TextField(
               
-            ),
-            Text("Bubble Learing ",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.blueAccent,
-                  fontStyle: FontStyle.italic
-                ),
-                ),
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+      //       ),
+      //       Text("Bubble Learing ",
+      //           style: TextStyle(
+      //             fontSize: 30,
+      //             color: Colors.blueAccent,
+      //             fontStyle: FontStyle.italic
+      //           ),
+      //           ),
+      //       Text(
+      //         'You have pushed the button this many times:',
+      //       ),
+      //       Text(
+      //         '$_counter',
+      //         style: Theme.of(context).textTheme.headline4,
+      //       ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FlatButton(
-                  onPressed: (){
-                    Navigator.of(context).push(new MaterialPageRoute(builder: 
-                   (BuildContext context) => new Test()));
-                  },
-                  child: Text("Next")),
-                RaisedButton(onPressed: _incrementCounter,
-                  textColor: Colors.white,                  
-                   child: Text("Cancel"),                   
-                   ),
+      //       Row(
+      //         mainAxisAlignment: MainAxisAlignment.center,
+      //         children: [
+      //           FlatButton(
+      //             onPressed: (){
+      //               Navigator.of(context).push(new MaterialPageRoute(builder: 
+      //              (BuildContext context) => new Test()));
+      //             },
+      //             child: Text("Next")),
+      //           RaisedButton(onPressed: _incrementCounter,
+      //             textColor: Colors.white,                  
+      //              child: Text("Cancel"),                   
+      //              ),
 
-                   IconButton(icon:Icon( Icons.favorite), onPressed: _incrementCounter)
-              ],
-            )
+      //              IconButton(icon:Icon( Icons.favorite), onPressed: _incrementCounter)
+      //         ],
+      //       )
+      //     ],
+      //   ),
+      // ),
+
+      body: Container(
+        child: ListView(
+          padding: const EdgeInsets.all(5.0),
+          children: [
+            Text("Recent Visits",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic
+              ),
+              ),
+
+              Center(
+                child: SizedBox(
+                  height: 200, // card height
+                  child: PageView.builder(
+                    itemCount: 10,
+                    controller: PageController(viewportFraction: 0.7),
+                    onPageChanged: (int index) => setState(() => _index = index),
+                    itemBuilder: (_, i) {
+                      return Transform.scale(
+                        scale: i == _index ? 1 : 0.9,
+                        child: Card(
+                          color: Colors.purple,
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "Card ${i + 1}",
+                              style: TextStyle(fontSize: 32,color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      );
+                  
+                    }
+              ),
+              )
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 10)),  //this is padd
+
+              Text("All Sallon",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic
+              ),
+              ),
+
+              Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
+
+
+
+              TestCard(),
+              TestCard(),
+              
+              TestCard(),
+              TestCard(),
+              
+              TestCard(),
+              TestCard(),
+
           ],
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: ()
+        {
+           Navigator.of(context).push(new MaterialPageRoute(builder: 
+                    (BuildContext context) => new Test()));
+        },
         tooltip: 'Increment',
         child: Icon(Icons.bubble_chart),
         backgroundColor:Colors.purple,
-      ), 
-      
+      ),
+
       drawer: Drawer(
-        child:ListTile(title: Text("Add Service"),),
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.purple,
+              ),
+              // child: Text(
+              //   'Bubble',
+              //   style: TextStyle(
+              //     color: Colors.white,
+              //     fontSize: 24,
+              //   ),
+              // ),
+              child: Icon(Icons.bubble_chart,                  
+                  size: 90,
+                  color: Colors.white,),
+            ),
+            ListTile(
+              leading: Icon(Icons.message),
+              title: Text('Messages'),
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+          ],
+        ),
+      ) 
+      
+      
     );
   }
 }
