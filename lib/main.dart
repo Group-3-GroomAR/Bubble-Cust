@@ -1,4 +1,5 @@
 import 'package:bubbletest/test.dart';
+import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
 
@@ -80,13 +81,34 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text("Bubble",
-          style: TextStyle(fontStyle: FontStyle.italic),
-        ),
+        // title: Text("Bubble",
+        //   style: TextStyle(fontStyle: FontStyle.italic),
+        // ),
         elevation: 10,        
         actions: [
-          Icon(Icons.search),
-          Icon(Icons.location_on)         
+          IconButton(icon:Icon(Icons.search), onPressed: (){
+            showSearch(context: context, delegate: TestSearchDelegate());            
+          },),
+          IconButton(icon: Icon(Icons.location_on)     , onPressed: ()
+          {
+            showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+              return Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Text('This is the modal bottom sheet. Slide down to dismiss.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ),
+              );
+            });
+
+          }),
+          IconButton(icon: Icon(Icons.notifications), onPressed: (){})   
+
           
         ],     
         
@@ -156,12 +178,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           padding: const EdgeInsets.all(5.0),
           children: [
-            Text("Recent Visits",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic
-              ),
+            Container(
+                padding:EdgeInsets.only(left: 5) ,
+                child:Text("Recent Visits",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),     
+                  ),
               ),
 
               Center(
@@ -176,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         scale: i == _index ? 1 : 0.9,
                         child: Card(
                           color: Colors.purple,
-                          elevation: 6,
+                          elevation: 10,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           child: Center(
                             child: Text(
@@ -192,14 +216,31 @@ class _MyHomePageState extends State<MyHomePage> {
               )
               ),
 
-              Padding(padding: EdgeInsets.only(top: 10)),  //this is padd
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                ), 
+                
+                Divider(
+                  thickness: 2,
+                  color: Colors.grey,
+                  
+                ), //this is padd
 
-              Text("All Sallon",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic
-              ),
+                Padding(
+                padding: EdgeInsets.only(top: 5),
+                ), 
+
+
+
+              
+              Container(
+                padding:EdgeInsets.only(left: 5) ,
+                child:Text("All Sallon",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),     
+                  ),
               ),
 
               Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
@@ -231,6 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       drawer: Drawer(
+        elevation: 20,
         child: ListView(
           padding: EdgeInsets.zero,
           children: const <Widget>[
@@ -238,28 +280,67 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 color: Colors.purple,
               ),
-              // child: Text(
-              //   'Bubble',
-              //   style: TextStyle(
-              //     color: Colors.white,
-              //     fontSize: 24,
-              //   ),
-              // ),
+              
               child: Icon(Icons.bubble_chart,                  
                   size: 90,
                   color: Colors.white,),
             ),
-            ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Messages'),
-            ),
+
+
             ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
+              title: Text('Profile',
+                  style: TextStyle(fontWeight:FontWeight.bold)),
             ),
+
+            Divider(thickness: 2,),
+
+            ListTile(
+              leading: Icon(Icons.event_available),
+              title: Text('Upcoming ',
+                      style: TextStyle(fontWeight:FontWeight.bold)
+               )
+            ),
+
+            ListTile(
+              leading: Icon(Icons.timeline),
+              title: Text('History',
+                  style: TextStyle(fontWeight:FontWeight.bold)
+               )
+            ),
+
+            Divider(thickness: 2,),
+
+            ListTile(
+              leading: Icon(Icons.face),
+              title: Text('Hair Style',
+                  style: TextStyle(fontWeight:FontWeight.bold)),              
+            ),
+
+            ListTile(
+              leading: Icon(Icons.notifications_none),
+              title: Text('Notification',
+                  style: TextStyle(fontWeight:FontWeight.bold)),              
+            ),
+
+            ListTile(
+              leading: Icon(Icons.payment),
+              title: Text('Payment',
+                  style: TextStyle(fontWeight:FontWeight.bold)),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.contacts),
+              title: Text('Contact us',
+                  style: TextStyle(fontWeight:FontWeight.bold)),
+            ),
+
+            Divider(thickness: 2,),
+            
             ListTile(
               leading: Icon(Icons.settings),
-              title: Text('Settings'),
+              title: Text('Settings',
+                  style: TextStyle(fontWeight:FontWeight.bold)),
             ),
           ],
         ),

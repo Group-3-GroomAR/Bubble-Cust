@@ -74,25 +74,25 @@ class _TestCardState extends State<TestCard> {
                   ),
                   Wrap(
                     children: [
-                      Text("Mickey Mouse is a cartoon character and the mascot of The Walt Disney Company. He was created by Walt Disney and Ub Iwerks at the Walt Disney Studios in 1928. An anthropomorphic mouse who typically wears red shorts, large yellow shoes, and white gloves, Mickey is one of the world's most recognizable characters.",
+                      Text("Mickey Mouse is a cartoon character and the mascot of The Walt Disney Company.",
                         style: TextStyle(color: Colors.grey),)
                     ],
                   ),
                   
                   Divider(
-
+                    thickness: 1
                   ),
 
                   Row(
                     children: [
-                      Text("Tonight's availability",
+                      Text("Today's availability",
                         style: TextStyle(color: Colors.black,
                         fontSize: 20),)
                     ],
                   ),
 
-                  Row(
-                    
+                  Wrap(   
+                    spacing: 3,                                     
                     children: [
                       Chip(label: Text("5:30PM"),elevation: 5,),
                       Chip(label: Text("7:30PM",style: TextStyle(color: Colors.deepPurple),),elevation: 5,backgroundColor: Colors.purple.shade100,),
@@ -100,19 +100,6 @@ class _TestCardState extends State<TestCard> {
                       Chip(label: Text("9:00PM"),elevation: 5,),
                     ],
                   ),
-
-                  Row(
-                    
-                    children: [
-                      FlatButton(onPressed: ()
-                      {}, 
-                      child:Text("RESERVE",style: TextStyle(color: Colors.deepPurple),))
-                    ],
-                  ),
-
-
-
-
                 ],
               ),            
               
