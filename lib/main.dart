@@ -1,4 +1,9 @@
+import 'package:bubbletest/drawer/history.dart';
+import 'package:bubbletest/drawer/notification.dart';
+import 'package:bubbletest/drawer/profile.dart';
+import 'package:bubbletest/drawer/upcoming.dart';
 import 'package:bubbletest/test.dart';
+import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +60,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  int _index = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // title: Text("Bubble",
         //   style: TextStyle(fontStyle: FontStyle.italic),
         // ),
-        elevation: 10,        
+        elevation:0,        
         actions: [
           IconButton(icon:Icon(Icons.search), onPressed: (){
             showSearch(context: context, delegate: TestSearchDelegate());            
@@ -92,146 +85,125 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(icon: Icon(Icons.location_on)     , onPressed: ()
           {
             showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
+              int _value=1;
               return Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Text('This is the modal bottom sheet. Slide down to dismiss.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 24.0,
-                    ),
-                  ),
+                  padding: const EdgeInsets.all(1.0),
+                  child: ListView(
+                    children: [
+                      Text('This is the modal bottom sheet. Slide down to dismiss.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontSize: 24.0,
+                          ),
+                        ),
+                        Wrap(
+                          children: List<Widget>.generate(
+                            3,
+                            (int index) {
+                              return ChoiceChip(
+                                label: Text('Item $index'),
+                                selected: _value == index,
+                                onSelected: (bool selected) {
+                                  setState(() {
+                                    _value = selected ? index : null;
+                                  });
+                                },
+                              );
+                            },
+                          ).toList(),
+                        ),
+
+                        
+                        
+                    ],
+                  )
                 ),
               );
             });
 
           }),
-          IconButton(icon: Icon(Icons.notifications), onPressed: (){})   
-
-          
-        ],     
-        
-        
+          IconButton(icon: Icon(Icons.notifications), onPressed: (){
+            Navigator.of(context).push(new MaterialPageRoute(builder: 
+                    (BuildContext context) => new NotificationPage ()));
+            
+          })   
+        ],          
       
       ),
-      // body: Center(
-      //   // Center is a layout widget. It takes a single child and positions it
-      //   // in the middle of the parent.
-      //   child: Column(
-      //     // Column is also a layout widget. It takes a list of children and
-      //     // arranges them vertically. By default, it sizes itself to fit its
-      //     // children horizontally, and tries to be as tall as its parent.
-      //     //
-      //     // Invoke "debug painting" (press "p" in the console, choose the
-      //     // "Toggle Debug Paint" action from the Flutter Inspector in Android
-      //     // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-      //     // to see the wireframe for each widget.
-      //     //
-      //     // Column has various properties to control how it sizes itself and
-      //     // how it positions its children. Here we use mainAxisAlignment to
-      //     // center the children vertically; the main axis here is the vertical
-      //     // axis because Columns are vertical (the cross axis would be
-      //     // horizontal).
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       TextField(
-              
-      //       ),
-      //       Text("Bubble Learing ",
-      //           style: TextStyle(
-      //             fontSize: 30,
-      //             color: Colors.blueAccent,
-      //             fontStyle: FontStyle.italic
-      //           ),
-      //           ),
-      //       Text(
-      //         'You have pushed the button this many times:',
-      //       ),
-      //       Text(
-      //         '$_counter',
-      //         style: Theme.of(context).textTheme.headline4,
-      //       ),
-
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           FlatButton(
-      //             onPressed: (){
-      //               Navigator.of(context).push(new MaterialPageRoute(builder: 
-      //              (BuildContext context) => new Test()));
-      //             },
-      //             child: Text("Next")),
-      //           RaisedButton(onPressed: _incrementCounter,
-      //             textColor: Colors.white,                  
-      //              child: Text("Cancel"),                   
-      //              ),
-
-      //              IconButton(icon:Icon( Icons.favorite), onPressed: _incrementCounter)
-      //         ],
-      //       )
-      //     ],
-      //   ),
-      // ),
-
+      
       body: Container(
         child: ListView(
-          padding: const EdgeInsets.all(5.0),
+          //padding: const EdgeInsets.all(5.0),
           children: [
             Container(
+                color: Colors.purple,
                 padding:EdgeInsets.only(left: 5) ,
                 child:Text("Recent Visits",
                     style: TextStyle(
                       fontSize: 18,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),     
                   ),
               ),
 
-              Center(
-                child: SizedBox(
-                  height: 200, // card height
-                  child: PageView.builder(
+              
+              //   SizedBox(
+              //     height: 250, // card height
+              //     child: PageView.builder(
+              //       itemCount: 10,
+              //       controller: PageController(viewportFraction: 0.7),
+              //       onPageChanged: (int index) => setState(() => _index = index),
+              //       itemBuilder: (_, i) {
+              //         return Transform.scale(
+              //           scale: i == _index ? 1 : 0.9,
+              //           // child: Card(
+              //           //   color: Colors.purple,
+              //           //   elevation: 10,
+              //           //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              //           //   child: Center(
+              //           //     child: Text(
+              //           //       "Card ${i + 1}",
+              //           //       style: TextStyle(fontSize: 32,color: Colors.white),
+              //           //     ),
+              //           //   ),
+              //           // ),
+              //           child: SpecialistTile(speciality: "Hair", noOfDoctors: i+1, backColor: Colors.purple),
+              //         );
+                  
+              //       }
+              // ),
+              // ),
+              Container(
+                padding:EdgeInsets.only(bottom: 15,left:5,right:5),
+                //margin: EdgeInsets.all(5),
+                //color: Colors.purple,
+                height: 250,
+                decoration: BoxDecoration(
+                      
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.only(bottomRight:  Radius.circular(20),bottomLeft:Radius.circular(20)),
+                      border: Border.all(width: 1,color: Colors.purple)
+                    ),
+                child: ListView.builder(
                     itemCount: 10,
-                    controller: PageController(viewportFraction: 0.7),
-                    onPageChanged: (int index) => setState(() => _index = index),
-                    itemBuilder: (_, i) {
-                      return Transform.scale(
-                        scale: i == _index ? 1 : 0.9,
-                        child: Card(
-                          color: Colors.purple,
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Text(
-                              "Card ${i + 1}",
-                              style: TextStyle(fontSize: 32,color: Colors.white),
-                            ),
-                          ),
-                        ),
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index){
+                      return SpecialistTile(
+                        speciality: "Hair",
+                        noOfDoctors: index,
+                        backColor: Colors.white,
                       );
-                  
-                    }
+                    }),
               ),
-              )
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                ), 
-                
-                Divider(
-                  thickness: 2,
-                  color: Colors.grey,
-                  
-                ), //this is padd
-
+            
                 Padding(
                 padding: EdgeInsets.only(top: 5),
                 ), 
-
-
-
               
               Container(
                 padding:EdgeInsets.only(left: 5) ,
@@ -245,8 +217,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
 
-
-
               TestCard(),
               TestCard(),
               
@@ -255,12 +225,24 @@ class _MyHomePageState extends State<MyHomePage> {
               
               TestCard(),
               TestCard(),
+              ListTile(
+              leading: Icon(Icons.event_available),
+              title: Text('Upcoming ',
+                      style: TextStyle(fontWeight:FontWeight.bold)
+               ),
+               onTap: ()
+               {
+
+               },
+            ),
 
           ],
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
+        isExtended: true,
+        
         onPressed: ()
         {
            Navigator.of(context).push(new MaterialPageRoute(builder: 
@@ -272,81 +254,99 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       drawer: Drawer(
-        elevation: 20,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.purple,
-              ),
-              
-              child: Icon(Icons.bubble_chart,                  
-                  size: 90,
-                  color: Colors.white,),
-            ),
+        
+            // Add a ListView to the drawer. This ensures the user can scroll
+            // through the options in the drawer if there isn't enough vertical
+            // space to fit everything.
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: <Widget>[
 
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                  ),                  
+                  child: Icon(Icons.bubble_chart,                  
+                      size: 90,
+                      color: Colors.white,),
+                ),
+                
+                ListTile(
+                      leading: Icon(Icons.account_circle),
+                      title: Text('Profile',
+                        style: TextStyle(fontWeight:FontWeight.bold)),
+                        onTap: ()
+                        {
+                          Navigator.of(context).push(new MaterialPageRoute(builder: 
+                                   (BuildContext context) => new Profile()));
+                        }
+                        ,
+                      
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile',
-                  style: TextStyle(fontWeight:FontWeight.bold)),
-            ),
+                    Divider(thickness: 2,),
 
-            Divider(thickness: 2,),
+                    ListTile(
+                      leading: Icon(Icons.event_available),
+                      title: Text('Upcoming ',
+                              style: TextStyle(fontWeight:FontWeight.bold)
+                      ),
+                      onTap: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: 
+                              (BuildContext context) => new Upcoming ()));
+                      },
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.event_available),
-              title: Text('Upcoming ',
-                      style: TextStyle(fontWeight:FontWeight.bold)
-               )
-            ),
+                    ListTile(
+                      leading: Icon(Icons.timeline),
+                      title: Text('History',
+                          style: TextStyle(fontWeight:FontWeight.bold)
+                      ),
+                      onTap: (){
+                          Navigator.of(context).push(new MaterialPageRoute(builder: 
+                    (BuildContext context) => new History ()));
+                      }
+                      ,
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.timeline),
-              title: Text('History',
-                  style: TextStyle(fontWeight:FontWeight.bold)
-               )
-            ),
+                    Divider(thickness: 2,),
 
-            Divider(thickness: 2,),
+                    ListTile(
+                      leading: Icon(Icons.face),
+                      title: Text('Hair Style',
+                          style: TextStyle(fontWeight:FontWeight.bold)),              
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.face),
-              title: Text('Hair Style',
-                  style: TextStyle(fontWeight:FontWeight.bold)),              
-            ),
+                    ListTile(
+                      leading: Icon(Icons.notifications_none),
+                      title: Text('Notification',
+                          style: TextStyle(fontWeight:FontWeight.bold)),              
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.notifications_none),
-              title: Text('Notification',
-                  style: TextStyle(fontWeight:FontWeight.bold)),              
-            ),
+                    ListTile(
+                      leading: Icon(Icons.payment),
+                      title: Text('Payment',
+                          style: TextStyle(fontWeight:FontWeight.bold)),
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.payment),
-              title: Text('Payment',
-                  style: TextStyle(fontWeight:FontWeight.bold)),
-            ),
+                    ListTile(
+                      leading: Icon(Icons.contacts),
+                      title: Text('Contact us',
+                          style: TextStyle(fontWeight:FontWeight.bold)),
+                    ),
 
-            ListTile(
-              leading: Icon(Icons.contacts),
-              title: Text('Contact us',
-                  style: TextStyle(fontWeight:FontWeight.bold)),
-            ),
-
-            Divider(thickness: 2,),
+                    Divider(thickness: 2,),
+                    
+                    ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings',
+                          style: TextStyle(fontWeight:FontWeight.bold)),            
+                    ),            
             
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings',
-                  style: TextStyle(fontWeight:FontWeight.bold)),
+              ],
             ),
-          ],
-        ),
-      ) 
-      
-      
-    );
+          )      
+   );
   }
 }

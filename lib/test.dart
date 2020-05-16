@@ -8,13 +8,11 @@ class Test extends StatefulWidget {
 class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-           
+    return Scaffold(          
 
       body: Container(
         constraints: BoxConstraints.expand(),   
-        child: Card(
-        shadowColor: Colors.grey,
+        child: Container(
        // elevation: 50,        
         child:Image.network("https://cdn140.picsart.com/290740494018201.gif?to=min&r=1024",
         fit: BoxFit.fill,            
