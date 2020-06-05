@@ -1,3 +1,4 @@
+import 'package:bubbletest/drawer/Login.dart';
 import 'package:bubbletest/drawer/history.dart';
 import 'package:bubbletest/drawer/notification.dart';
 import 'package:bubbletest/drawer/profile.dart';
@@ -61,6 +62,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
    int _index = 0;
+   int _value=0;    //this is value of city list
+   List<String> _cityList=new List(5);
+   String _city;
+
+   @override
+  void initState() {
+    super.initState();
+    _cityList[0]="Colombo";
+    _cityList[1]="Nuwara Eliya";
+    _cityList[2]="Kandy";
+    _cityList[3]="Gampaha";
+    _cityList[4]="Matara";
+    _city=_cityList[0];
+
+    
+    
+  }
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,31 +105,33 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(icon: Icon(Icons.location_on)     , onPressed: ()
           {
             showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
-              int _value=1;
+              
               return Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ListView(
-                    children: [
-                      Text('This is the modal bottom sheet. Slide down to dismiss.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: 24.0,
-                          ),
-                        ),
-                        Wrap(
+                  padding: const EdgeInsets.all(5.0),
+                  child:                      
+                        Wrap(                          
                           children: List<Widget>.generate(
-                            3,
+                            5,
                             (int index) {
-                              return ChoiceChip(
-                                label: Text('Item $index'),
-                                selected: _value == index,
-                                onSelected: (bool selected) {
-                                  setState(() {
-                                    _value = selected ? index : null;
-                                  });
-                                },
+                              String _temp=_cityList.elementAt(index);
+                              return Container(
+                                margin: EdgeInsets.only(left:3,right:3),
+                                child:ChoiceChip(
+                                  elevation: 5,
+                                  padding: EdgeInsets.all(5),
+                                  label: Text('$_temp',
+                                        style: TextStyle(fontSize: 20)
+                                      ,),
+                                  selected: _value == index,
+                                  onSelected: (bool selected) {
+                                    setState(() {
+                                      _value = selected ? index : null;
+                                      _city=_cityList[_value];
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                )
                               );
                             },
                           ).toList(),
@@ -117,8 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         
                         
-                    ],
-                  )
+                    
                 ),
               );
             });
@@ -202,18 +223,34 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             
                 Padding(
-                padding: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.only(top: 10),
                 ), 
               
               Container(
                 padding:EdgeInsets.only(left: 5) ,
-                child:Text("All Sallon",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),     
-                  ),
+                child:Wrap(
+                  children: [
+                    Text("All Sallon(",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),     
+                    ),
+                    Icon(Icons.location_on,
+                        size: 18,
+                    ),
+                    Text("$_city)",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),     
+                    ),
+
+                  ],
+                )
               ),
+
+
 
               Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
 
@@ -225,16 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
               
               TestCard(),
               TestCard(),
-              ListTile(
-              leading: Icon(Icons.event_available),
-              title: Text('Upcoming ',
-                      style: TextStyle(fontWeight:FontWeight.bold)
-               ),
-               onTap: ()
-               {
-
-               },
-            ),
+              
 
           ],
         ),
@@ -337,12 +365,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 
                     Divider(thickness: 2,),
+                    ListTile(
+                      leading: Icon(Icons.event_available),
+                      title: Text('LogIn',
+                              style: TextStyle(fontWeight:FontWeight.bold)
+                      ),
+                      onTap: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: 
+                              (BuildContext context) => new LoginScreen()));
+                      },
+                    ),
                     
                     ListTile(
                       leading: Icon(Icons.settings),
                       title: Text('Settings',
                           style: TextStyle(fontWeight:FontWeight.bold)),            
-                    ),            
+                    ),    
+
             
               ],
             ),
@@ -350,3 +389,4 @@ class _MyHomePageState extends State<MyHomePage> {
    );
   }
 }
+

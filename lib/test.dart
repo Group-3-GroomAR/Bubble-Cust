@@ -14,7 +14,7 @@ class _TestState extends State<Test> {
         constraints: BoxConstraints.expand(),   
         child: Container(
        // elevation: 50,        
-        child:Image.network("https://cdn140.picsart.com/290740494018201.gif?to=min&r=1024",
+        child:Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTzbyyUP92IPGYnIaI6ShS4Me6fDxOoyb5DZsJKrRk9aBmBHauH&usqp=CAU",
         fit: BoxFit.fill,            
         ),
       ),

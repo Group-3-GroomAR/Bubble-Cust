@@ -38,7 +38,7 @@ class _TestCardState extends State<TestCard> {
                 children: [
                   Row(
                     children: [
-                      Text("Mickey Mouse",
+                      Text("Salon LIYO",
                     style: TextStyle(fontSize: 30,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
@@ -68,13 +68,13 @@ class _TestCardState extends State<TestCard> {
                   ),
                   Row(
                     children: [
-                      Text("@.Disney",
+                      Text("@No.224A, Highlevel Road, Nugegoda ",
                         style: TextStyle(color: Colors.black),)
                     ],
                   ),
-                  Wrap(
+                  Row(                    
                     children: [
-                      Text("Mickey Mouse is a cartoon character and the mascot of The Walt Disney Company.",
+                      Text("Beauty salon in Nugegoda ",
                         style: TextStyle(color: Colors.grey),)
                     ],
                   ),
