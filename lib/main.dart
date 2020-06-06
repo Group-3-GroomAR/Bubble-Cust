@@ -1,4 +1,3 @@
-import 'package:bubbletest/drawer/Login.dart';
 import 'package:bubbletest/drawer/history.dart';
 import 'package:bubbletest/drawer/notification.dart';
 import 'package:bubbletest/drawer/profile.dart';
@@ -8,6 +7,8 @@ import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
+
+import 'drawer/Login.dart';
 
 void main() {
   runApp(MyApp());
@@ -202,8 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 //margin: EdgeInsets.all(5),
                 //color: Colors.purple,
                 height: 250,
-                decoration: BoxDecoration(
-                      
+                decoration: BoxDecoration(                      
                       color: Colors.purple,
                       borderRadius: BorderRadius.only(bottomRight:  Radius.circular(20),bottomLeft:Radius.circular(20)),
                       border: Border.all(width: 1,color: Colors.purple)
@@ -211,7 +211,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView.builder(
                     itemCount: 10,
                     shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index){
                       return SpecialistTile(
@@ -254,14 +253,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
 
-              TestCard(),
-              TestCard(),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon TTT","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIY","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYX","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
+
               
-              TestCard(),
-              TestCard(),
-              
-              TestCard(),
-              TestCard(),
               
 
           ],
