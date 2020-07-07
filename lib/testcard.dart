@@ -1,13 +1,26 @@
+//this card is to use in main screen
+
 import 'package:flutter/material.dart';
 
 class TestCard extends StatefulWidget {
-  TestCard({Key key}) : super(key: key);
+  final String _nam;
+  final String _add;
+  final String _dis;
+
+  TestCard(this._nam,this._add,this._dis);
 
   @override
-  _TestCardState createState() => _TestCardState();
+  _TestCardState createState() => _TestCardState(this._nam,this._add,this._dis);
 }
 
 class _TestCardState extends State<TestCard> {
+  String _shopName="Name";
+  String _address="Address";
+  String _discription="Discription";
+
+  //this is constructor
+  _TestCardState(this._shopName,this._address,this._discription);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,10 +34,13 @@ class _TestCardState extends State<TestCard> {
               elevation: 6,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Image.network(
-                'https://lumiere-a.akamaihd.net/v1/images/open-uri20150422-20810-5geuz6_4e1954c9.jpeg?region=0,0,600,600',
-                fit: BoxFit.fill,
-                // height: 200,
+              child: Container(
+                height: 300,
+                width: MediaQuery.of(context).size.width,
+                child:Image.network(
+                  'https://www.48hourslogo.com/48hourslogo_data/2018/07/14/74963_1531515608.jpg',
+                  fit: BoxFit.cover,
+                ),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -38,7 +54,7 @@ class _TestCardState extends State<TestCard> {
                 children: [
                   Row(
                     children: [
-                      Text("Salon LIYO",
+                      Text(_shopName,
                     style: TextStyle(fontSize: 30,
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
@@ -68,13 +84,13 @@ class _TestCardState extends State<TestCard> {
                   ),
                   Row(
                     children: [
-                      Text("@No.224A, Highlevel Road, Nugegoda ",
+                      Text(_address,
                         style: TextStyle(color: Colors.black),)
                     ],
                   ),
                   Row(                    
                     children: [
-                      Text("Beauty salon in Nugegoda ",
+                      Text(_discription,
                         style: TextStyle(color: Colors.grey),)
                     ],
                   ),
