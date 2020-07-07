@@ -8,7 +8,7 @@ import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
 
-import 'drawer/Login.dart';
+//import 'drawer/Login.dart';
 
 void main() {
   runApp(MyApp());
@@ -369,7 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
 
                     Divider(thickness: 2,),
-                    ListTile(
+                   /* ListTile(
                       leading: Icon(Icons.event_available),
                       title: Text('LogIn',
                               style: TextStyle(fontWeight:FontWeight.bold)
@@ -378,7 +378,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.of(context).push(new MaterialPageRoute(builder: 
                               (BuildContext context) => new LoginScreen()));
                       },
-                    ),
+                    ),*/
                     
                     ListTile(
                       leading: Icon(Icons.settings),
