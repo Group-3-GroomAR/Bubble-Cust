@@ -8,6 +8,8 @@ import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
 
+import 'drawer/payment.dart';
+
 //import 'drawer/Login.dart';
 
 void main() {
@@ -38,7 +40,6 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      
     );
   }
 }
@@ -62,26 +63,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-   int _index = 0;
-   int _value=0;    //this is value of city list
-   List<String> _cityList=new List(5);
-   String _city;
+  int _index = 0;
+  int _value = 0; //this is value of city list
+  List<String> _cityList = new List(5);
+  String _city;
 
-   @override
+  @override
   void initState() {
     super.initState();
-    _cityList[0]="Colombo";
-    _cityList[1]="Nuwara Eliya";
-    _cityList[2]="Kandy";
-    _cityList[3]="Gampaha";
-    _cityList[4]="Matara";
-    _city=_cityList[0];
-
-    
-    
+    _cityList[0] = "Colombo";
+    _cityList[1] = "Nuwara Eliya";
+    _cityList[2] = "Kandy";
+    _cityList[3] = "Gampaha";
+    _cityList[4] = "Matara";
+    _city = _cityList[0];
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,86 +88,86 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        // title: Text("Bubble",
-        //   style: TextStyle(fontStyle: FontStyle.italic),
-        // ),
-        elevation:0,        
-        actions: [
-          IconButton(icon:Icon(Icons.search), onPressed: (){
-            showSearch(context: context, delegate: TestSearchDelegate());            
-          },),
-          IconButton(icon: Icon(Icons.location_on)     , onPressed: ()
-          {
-            showModalBottomSheet<void>(context: context, builder: (BuildContext context) {
-              
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child:                      
-                        Wrap(                          
-                          children: List<Widget>.generate(
-                            5,
-                            (int index) {
-                              String _temp=_cityList.elementAt(index);
-                              return Container(
-                                margin: EdgeInsets.only(left:3,right:3),
-                                child:ChoiceChip(
-                                  elevation: 5,
-                                  padding: EdgeInsets.all(5),
-                                  label: Text('$_temp',
-                                        style: TextStyle(fontSize: 20)
-                                      ,),
-                                  selected: _value == index,
-                                  onSelected: (bool selected) {
-                                    setState(() {
-                                      _value = selected ? index : null;
-                                      _city=_cityList[_value];
-                                      Navigator.pop(context);
-                                    });
-                                  },
-                                )
-                              );
-                            },
-                          ).toList(),
-                        ),
-
-                        
-                        
-                    
-                ),
-              );
-            });
-
-          }),
-          IconButton(icon: Icon(Icons.notifications), onPressed: (){
-            Navigator.of(context).push(new MaterialPageRoute(builder: 
-                    (BuildContext context) => new NotificationPage ()));
-            
-          })   
-        ],          
-      
-      ),
-      
-      body: Container(
-        child: ListView(
-          //padding: const EdgeInsets.all(5.0),
-          children: [
-            Container(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          // title: Text("Bubble",
+          //   style: TextStyle(fontStyle: FontStyle.italic),
+          // ),
+          elevation: 0,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: TestSearchDelegate());
+              },
+            ),
+            IconButton(
+                icon: Icon(Icons.location_on),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Wrap(
+                              children: List<Widget>.generate(
+                                5,
+                                (int index) {
+                                  String _temp = _cityList.elementAt(index);
+                                  return Container(
+                                      margin:
+                                          EdgeInsets.only(left: 3, right: 3),
+                                      child: ChoiceChip(
+                                        elevation: 5,
+                                        padding: EdgeInsets.all(5),
+                                        label: Text(
+                                          '$_temp',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        selected: _value == index,
+                                        onSelected: (bool selected) {
+                                          setState(() {
+                                            _value = selected ? index : null;
+                                            _city = _cityList[_value];
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                      ));
+                                },
+                              ).toList(),
+                            ),
+                          ),
+                        );
+                      });
+                }),
+            IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          new NotificationPage()));
+                })
+          ],
+        ),
+        body: Container(
+          child: ListView(
+            //padding: const EdgeInsets.all(5.0),
+            children: [
+              Container(
                 color: Colors.purple,
-                padding:EdgeInsets.only(left: 5) ,
-                child:Text("Recent Visits",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),     
+                padding: EdgeInsets.only(left: 5),
+                child: Text(
+                  "Recent Visits",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
               ),
 
-              
               //   SizedBox(
               //     height: 250, // card height
               //     child: PageView.builder(
@@ -194,25 +190,26 @@ class _MyHomePageState extends State<MyHomePage> {
               //           // ),
               //           child: SpecialistTile(speciality: "Hair", noOfDoctors: i+1, backColor: Colors.purple),
               //         );
-                  
+
               //       }
               // ),
               // ),
               Container(
-                padding:EdgeInsets.only(bottom: 15,left:5,right:5),
+                padding: EdgeInsets.only(bottom: 15, left: 5, right: 5),
                 //margin: EdgeInsets.all(5),
                 //color: Colors.purple,
                 height: 250,
-                decoration: BoxDecoration(                      
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.only(bottomRight:  Radius.circular(20),bottomLeft:Radius.circular(20)),
-                      border: Border.all(width: 1,color: Colors.purple)
-                    ),
+                decoration: BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20)),
+                    border: Border.all(width: 1, color: Colors.purple)),
                 child: ListView.builder(
                     itemCount: 10,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index){
+                    itemBuilder: (context, index) {
                       return SpecialistTile(
                         speciality: "Hair",
                         noOfDoctors: index,
@@ -220,156 +217,153 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     }),
               ),
-            
-                Padding(
-                padding: EdgeInsets.only(top: 10),
-                ), 
-              
-              Container(
-                padding:EdgeInsets.only(left: 5) ,
-                child:Wrap(
-                  children: [
-                    Text("All Sallon(",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),     
-                    ),
-                    Icon(Icons.location_on,
-                        size: 18,
-                    ),
-                    Text("$_city)",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),     
-                    ),
 
-                  ],
-                )
+              Padding(
+                padding: EdgeInsets.only(top: 10),
               ),
 
+              Container(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Wrap(
+                    children: [
+                      Text(
+                        "All Sallon(",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(
+                        Icons.location_on,
+                        size: 18,
+                      ),
+                      Text(
+                        "$_city)",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )),
 
+              Padding(padding: EdgeInsets.only(top: 5)), //this is padd
 
-              Padding(padding: EdgeInsets.only(top: 5)),  //this is padd
-
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon TTT","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIY","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYX","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO","@No.224A, Highlevel Road, Nugegoda ","Beauty salon in Nugegoda "),
-
-              
-              
-
-          ],
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+                  "Beauty salon in Nugegoda "),
+            ],
+          ),
         ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        isExtended: true,
-        
-        onPressed: ()
-        {
-           Navigator.of(context).push(new MaterialPageRoute(builder: 
-                    (BuildContext context) => new Test()));
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.bubble_chart),
-        backgroundColor:Colors.purple,
-      ),
-
-      drawer: Drawer(
-        
-            // Add a ListView to the drawer. This ensures the user can scroll
-            // through the options in the drawer if there isn't enough vertical
-            // space to fit everything.
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.purple,
-                  ),                  
-                  child: Icon(Icons.bubble_chart,                  
-                      size: 90,
-                      color: Colors.white,),
+        floatingActionButton: FloatingActionButton(
+          isExtended: true,
+          onPressed: () {
+            Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => new Test()));
+          },
+          tooltip: 'Increment',
+          child: Icon(Icons.bubble_chart),
+          backgroundColor: Colors.purple,
+        ),
+        drawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.purple,
                 ),
-                
-                ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text('Profile',
-                        style: TextStyle(fontWeight:FontWeight.bold)),
-                        onTap: ()
-                        {
-                          Navigator.of(context).push(new MaterialPageRoute(builder: 
-                                   (BuildContext context) => new Profile()));
-                        }
-                        ,
-                      
-                    ),
+                child: Icon(
+                  Icons.bubble_chart,
+                  size: 90,
+                  color: Colors.white,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text('Profile',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Profile()));
+                },
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              ListTile(
+                leading: Icon(Icons.event_available),
+                title: Text('Upcoming ',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Upcoming()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.timeline),
+                title: Text('History',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new History()));
+                },
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              ListTile(
+                leading: Icon(Icons.face),
+                title: Text('Hair Style',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              ListTile(
+                leading: Icon(Icons.notifications_none),
+                title: Text('Notification',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              ListTile(
+                leading: Icon(Icons.payment),
+                title: Text('Payment',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onTap: (){
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Payment()));
 
-                    Divider(thickness: 2,),
-
-                    ListTile(
-                      leading: Icon(Icons.event_available),
-                      title: Text('Upcoming ',
-                              style: TextStyle(fontWeight:FontWeight.bold)
-                      ),
-                      onTap: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: 
-                              (BuildContext context) => new Upcoming ()));
-                      },
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.timeline),
-                      title: Text('History',
-                          style: TextStyle(fontWeight:FontWeight.bold)
-                      ),
-                      onTap: (){
-                          Navigator.of(context).push(new MaterialPageRoute(builder: 
-                    (BuildContext context) => new History ()));
-                      }
-                      ,
-                    ),
-
-                    Divider(thickness: 2,),
-
-                    ListTile(
-                      leading: Icon(Icons.face),
-                      title: Text('Hair Style',
-                          style: TextStyle(fontWeight:FontWeight.bold)),              
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.notifications_none),
-                      title: Text('Notification',
-                          style: TextStyle(fontWeight:FontWeight.bold)),              
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.payment),
-                      title: Text('Payment',
-                          style: TextStyle(fontWeight:FontWeight.bold)),
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.contacts),
-                      title: Text('Contact us',
-                          style: TextStyle(fontWeight:FontWeight.bold)),
-                    ),
-
-                    Divider(thickness: 2,),
-                   /* ListTile(
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.contacts),
+                title: Text('Contact us',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              /* ListTile(
                       leading: Icon(Icons.event_available),
                       title: Text('LogIn',
                               style: TextStyle(fontWeight:FontWeight.bold)
@@ -379,18 +373,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               (BuildContext context) => new LoginScreen()));
                       },
                     ),*/
-                    
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings',
-                          style: TextStyle(fontWeight:FontWeight.bold)),            
-                    ),    
 
-            
-              ],
-            ),
-          )      
-   );
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ],
+          ),
+        ));
   }
 }
-

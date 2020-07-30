@@ -5,7 +5,7 @@ import 'package:credit_card/credit_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class payment extends StatefulWidget{
+class Payment extends StatefulWidget{
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
