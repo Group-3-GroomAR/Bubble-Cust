@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import "package:http/http.dart" as http;
 
 class RequestResult {
@@ -9,15 +8,18 @@ class RequestResult {
 }
 
 const PROTOCOL = "http";
-const DOMAIN = "192.168.8.101:3000";
+const DOMAIN = "192.168.43.70:3000";
 
 Future<RequestResult> httpGet(String route, [dynamic data]) async {
   var dataStr = jsonEncode(data);
   print("l");
+  print(dataStr);
   var url = "$PROTOCOL://$DOMAIN/$route?data=$dataStr";
+  //var url = "$PROTOCOL://$DOMAIN/$route";
   print("l");
   var result = await http.get(url);
-  print("l");
+  print("lo");
+  print(result.body);
 
   return RequestResult(true, jsonDecode(result.body));
 }

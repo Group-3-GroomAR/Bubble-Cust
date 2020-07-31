@@ -9,9 +9,8 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-
 class _ProfileState extends State<Profile> {
-  var firstColor= Colors.deepPurple, secondColor= Colors.purple;
+  var firstColor = Colors.deepPurple, secondColor = Colors.purple;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +47,20 @@ class _ProfileState extends State<Profile> {
                       fontSize: 30,
                     ),
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Container(
-                    padding: const EdgeInsets.only(left: 15,top:30),
+                    padding: const EdgeInsets.only(left: 15, top: 30),
                     child: Row(
                       children: <Widget>[
                         Icon(
                           Icons.mail_outline,
                           color: Colors.deepPurple,
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           "sundharsana@gmail.com",
                           style: TextStyle(
@@ -69,8 +72,9 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Container(
                     padding: const EdgeInsets.only(left: 15),
                     child: Row(
@@ -79,7 +83,9 @@ class _ProfileState extends State<Profile> {
                           Icons.phone,
                           color: Colors.deepPurple,
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           "0771234567",
                           style: TextStyle(
@@ -91,8 +97,9 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Container(
                     padding: const EdgeInsets.only(left: 15),
                     child: Row(
@@ -101,7 +108,9 @@ class _ProfileState extends State<Profile> {
                           Icons.location_on,
                           color: Colors.deepPurple,
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           "Jaffna",
                           style: TextStyle(
@@ -113,8 +122,9 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-
-                  SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Container(
                     padding: const EdgeInsets.only(left: 15),
                     child: Row(
@@ -123,7 +133,9 @@ class _ProfileState extends State<Profile> {
                           Icons.people,
                           color: Colors.deepPurple,
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(
                           "Men",
                           style: TextStyle(
@@ -135,9 +147,12 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15,),
-
-                  SizedBox(height: 250,),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 250,
+                  ),
                 ],
               ),
             ),
@@ -147,20 +162,15 @@ class _ProfileState extends State<Profile> {
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      floatingActionButton:  NiceButton(
+      floatingActionButton: NiceButton(
+        background: Colors.black,
         radius: 40,
         padding: const EdgeInsets.all(5),
         text: "Edit",
         icon: Icons.edit,
-        gradientColors: [
-          secondColor,firstColor
-        ],
-        onPressed: (){
-
-        },
+        gradientColors: [secondColor, firstColor],
+        onPressed: () {},
       ),
     );
   }
 }
-
-

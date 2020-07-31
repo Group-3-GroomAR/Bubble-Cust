@@ -7,7 +7,6 @@ import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/testcard.dart';
 import 'package:flutter/material.dart';
-
 import 'drawer/payment.dart';
 
 //import 'drawer/Login.dart';
@@ -349,10 +348,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 leading: Icon(Icons.payment),
                 title: Text('Payment',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                onTap: (){
+                onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (BuildContext context) => new Payment()));
-
                 },
               ),
               ListTile(
