@@ -5,9 +5,11 @@ import 'package:bubbletest/drawer/upcoming.dart';
 import 'package:bubbletest/test.dart';
 import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
-import 'package:bubbletest/testcard.dart';
+import 'package:bubbletest/shopcard.dart';
 import 'package:flutter/material.dart';
+import 'backend/http.dart';
 import 'drawer/payment.dart';
+import 'extra/shop.dart';
 
 //import 'drawer/Login.dart';
 
@@ -62,6 +64,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Shop> shopList = []; //list to add shop objects
+  List<ShopCard> shopCardList = []; //this is list of
+
   int _index = 0;
   int _value = 0; //this is value of city list
   List<String> _cityList = new List(5);
@@ -76,6 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _cityList[3] = "Gampaha";
     _cityList[4] = "Matara";
     _city = _cityList[0];
+
+    //this is for test
+    getShop();
   }
 
   @override
@@ -167,32 +175,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
 
-              //   SizedBox(
-              //     height: 250, // card height
-              //     child: PageView.builder(
-              //       itemCount: 10,
-              //       controller: PageController(viewportFraction: 0.7),
-              //       onPageChanged: (int index) => setState(() => _index = index),
-              //       itemBuilder: (_, i) {
-              //         return Transform.scale(
-              //           scale: i == _index ? 1 : 0.9,
-              //           // child: Card(
-              //           //   color: Colors.purple,
-              //           //   elevation: 10,
-              //           //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              //           //   child: Center(
-              //           //     child: Text(
-              //           //       "Card ${i + 1}",
-              //           //       style: TextStyle(fontSize: 32,color: Colors.white),
-              //           //     ),
-              //           //   ),
-              //           // ),
-              //           child: SpecialistTile(speciality: "Hair", noOfDoctors: i+1, backColor: Colors.purple),
-              //         );
-
-              //       }
-              // ),
-              // ),
               Container(
                 padding: EdgeInsets.only(bottom: 15, left: 5, right: 5),
                 //margin: EdgeInsets.all(5),
@@ -248,27 +230,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Padding(padding: EdgeInsets.only(top: 5)), //this is padd
 
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              shopCardList[0],
+
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
-              TestCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
                   "Beauty salon in Nugegoda "),
             ],
           ),
@@ -276,8 +260,9 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: FloatingActionButton(
           isExtended: true,
           onPressed: () {
-            Navigator.of(context).push(new MaterialPageRoute(
-                builder: (BuildContext context) => new Test()));
+            // Navigator.of(context).push(new MaterialPageRoute(
+            //     builder: (BuildContext context) => new Test()));
+            getShop();
           },
           tooltip: 'Increment',
           child: Icon(Icons.bubble_chart),
@@ -380,5 +365,36 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ));
+  }
+
+  //functions
+
+  //this is to get shop details
+  Future<void> getShop() async {
+    var result = await httpGet('shop');
+    if (result.ok) {
+      setState(() {
+        shopList.clear();
+        var in_shop = result.data as List<dynamic>;
+        in_shop.forEach((in_shop) {
+          shopList.add(Shop(in_shop['salon_id'], in_shop['shop_name'],
+              in_shop['salon_address'], in_shop['district']));
+        });
+        print(shopList.length.toString());
+        createUI();
+        // print(shopList[0].shopName);
+        // print(shopList[1].shopName);
+        // print(shopList[2].shopName);
+      });
+    }
+  }
+
+  //adding shop object to ui part
+  createUI() {
+    int i;
+    for (i = 0; i < shopList.length; i++) {
+      shopCardList.add(ShopCard(
+          shopList[i].shopName, shopList[i].shopAddress, shopList[i].district));
+    }
   }
 }
