@@ -4,7 +4,7 @@ import 'package:bubbletest/drawer/profile.dart';
 import 'package:bubbletest/drawer/upcoming.dart';
 import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
-import 'package:bubbletest/shopcard.dart';
+import 'package:bubbletest/pages/shopcard.dart';
 import 'package:flutter/material.dart';
 import 'backend/http.dart';
 import 'drawer/payment.dart';
@@ -235,6 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
               shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
 
               // ListView.builder(
+              //     shrinkWrap: true,
               //     itemCount: shopList.length,
               //     itemBuilder: (BuildContext context, int index) {
               //       return ShopCard(shopList[index].shopName,
@@ -380,15 +381,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //this is to get shop details
   Future<void> getShop(BuildContext context) async {
-    var result = await httpGet('shop');
+    var result = await httpGet('shoplist');
     if (result.ok) {
       print("shop details recived");
       setState(() {
         shopList.clear();
         var in_shop = result.data as List<dynamic>;
         in_shop.forEach((in_shop) {
-          shopList.add(Shop(in_shop['salon_id'], in_shop['shop_name'],
-              in_shop['salon_address'], in_shop['district']));
+          shopList.add(Shop.contact(
+              in_shop['salon_id'],
+              in_shop['shop_name'],
+              in_shop['salon_address'],
+              in_shop['district'],
+              in_shop['contact']));
         });
         print(shopList.length.toString());
         createUI();
@@ -409,8 +414,8 @@ class _MyHomePageState extends State<MyHomePage> {
   createUI() {
     int i;
     for (i = 0; i < shopList.length; i++) {
-      shopCardList.add(ShopCard(
-          shopList[i].shopName, shopList[i].shopAddress, shopList[i].district));
+      shopCardList.add(ShopCard(Shop(shopList[i].shopID, shopList[i].shopName,
+          shopList[i].shopAddress, shopList[i].district)));
     }
   }
 }

@@ -1,27 +1,31 @@
 //this card is to use in main screen
-
+import 'package:bubbletest/extra/shop.dart';
 import 'package:bubbletest/pages/shopdetail.dart';
 import 'package:flutter/material.dart';
 
 class ShopCard extends StatefulWidget {
-  final String _nam;
-  final String _add;
-  final String _dis;
-
-  ShopCard(this._nam, this._add, this._dis);
+  // final String _id;
+  // final String _nam;
+  // final String _add;
+  // final String _dis;
+  // ShopCard(this._id, this._nam, this._add, this._dis);
+  final Shop obj;
+  ShopCard(this.obj);
 
   @override
   _ShopCardState createState() =>
-      _ShopCardState(this._nam, this._add, this._dis);
+      //_ShopCardState(this._id, this._nam, this._add, this._dis);
+      _ShopCardState(this.obj);
 }
 
 class _ShopCardState extends State<ShopCard> {
-  String _shopName = "Name";
-  String _address = "Address";
-  String _discription = "Discription";
-
-  //this is constructor
-  _ShopCardState(this._shopName, this._address, this._discription);
+  // String _shopName = "Name";
+  // String _address = "Address";
+  // String _discription = "Discription";
+  // String _id = "ID";
+  // _ShopCardState(this._id, this._shopName, this._address, this._discription);
+  Shop _shop;
+  _ShopCardState(this._shop);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class _ShopCardState extends State<ShopCard> {
         child: GestureDetector(
       onTap: () {
         Navigator.of(context).push(new MaterialPageRoute(
-            builder: (BuildContext context) => new ShopDetail()));
+            builder: (BuildContext context) => new ShopDetail(_shop)));
       },
       child: Card(
           elevation: 10,
@@ -46,7 +50,7 @@ class _ShopCardState extends State<ShopCard> {
                   height: 300,
                   width: MediaQuery.of(context).size.width,
                   child: Image.network(
-                    'https://www.48hourslogo.com/48hourslogo_data/2018/07/14/74963_1531515608.jpg',
+                    _shop.image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -62,7 +66,7 @@ class _ShopCardState extends State<ShopCard> {
                     Row(
                       children: [
                         Text(
-                          _shopName,
+                          _shop.shopName,
                           style: TextStyle(
                               fontSize: 30,
                               color: Colors.black,
@@ -95,7 +99,7 @@ class _ShopCardState extends State<ShopCard> {
                     Row(
                       children: [
                         Text(
-                          _address,
+                          _shop.shopAddress,
                           style: TextStyle(color: Colors.black),
                         )
                       ],
@@ -103,7 +107,7 @@ class _ShopCardState extends State<ShopCard> {
                     Row(
                       children: [
                         Text(
-                          _discription,
+                          _shop.district,
                           style: TextStyle(color: Colors.grey),
                         )
                       ],

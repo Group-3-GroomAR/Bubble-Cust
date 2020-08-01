@@ -41,7 +41,7 @@ app.get('/tom', function (req, res) {
 });
 
 
-app.get('/shop',async(req,res,next)=>{
+app.get('/shoplist',async(req,res,next)=>{
   console.log("getting shop details");
   const [rows]=await db.query("SELECT * FROM salon;");
 
