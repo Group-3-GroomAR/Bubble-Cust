@@ -17,11 +17,16 @@ Future<RequestResult> httpGet(String route, [dynamic data]) async {
   var url = "$PROTOCOL://$DOMAIN/$route?data=$dataStr";
   //var url = "$PROTOCOL://$DOMAIN/$route";
   print("l");
-  var result = await http.get(url);
-  print("lo");
-  print(result.body);
 
-  return RequestResult(true, jsonDecode(result.body));
+  try {
+    var result = await http.get(url);
+    print("data has been recived from server");
+    //print(result.body);
+    return RequestResult(true, jsonDecode(result.body));
+  } catch (e) {
+    print(e.toString());
+    return RequestResult(false, "Connection error");
+  }
 }
 
 Future<RequestResult> httpPost(String route, [dynamic data]) async {

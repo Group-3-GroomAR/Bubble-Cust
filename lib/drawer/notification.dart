@@ -40,6 +40,7 @@ class _NotificationState extends State<NotificationPage> {
   Future<void> getShop() async {
     var result = await httpGet('shop');
     if (result.ok) {
+      //this is checking true or not
       setState(() {
         shopList.clear();
         var in_shop = result.data as List<dynamic>;

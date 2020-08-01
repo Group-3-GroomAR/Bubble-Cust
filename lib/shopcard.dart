@@ -1,5 +1,6 @@
 //this card is to use in main screen
 
+import 'package:bubbletest/pages/shopdetail.dart';
 import 'package:flutter/material.dart';
 
 class ShopCard extends StatefulWidget {
@@ -25,6 +26,11 @@ class _ShopCardState extends State<ShopCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        child: GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(new MaterialPageRoute(
+            builder: (BuildContext context) => new ShopDetail()));
+      },
       child: Card(
           elevation: 10,
           shape:
@@ -141,6 +147,6 @@ class _ShopCardState extends State<ShopCard> {
               )
             ],
           )),
-    );
+    ));
   }
 }

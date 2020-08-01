@@ -2,7 +2,6 @@ import 'package:bubbletest/drawer/history.dart';
 import 'package:bubbletest/drawer/notification.dart';
 import 'package:bubbletest/drawer/profile.dart';
 import 'package:bubbletest/drawer/upcoming.dart';
-import 'package:bubbletest/test.dart';
 import 'package:bubbletest/test/specialisttile.dart';
 import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/shopcard.dart';
@@ -66,6 +65,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Shop> shopList = []; //list to add shop objects
   List<ShopCard> shopCardList = []; //this is list of
+  int j;
 
   int _index = 0;
   int _value = 0; //this is value of city list
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _city = _cityList[0];
 
     //this is for test
-    getShop();
+    //getShop();
   }
 
   @override
@@ -228,32 +228,41 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   )),
 
-              Padding(padding: EdgeInsets.only(top: 5)), //this is padd
+              Padding(padding: EdgeInsets.only(top: 5)), //this is padding
 
-              shopCardList[0],
+              shopCardList.length != 0 ? shopCardList[0] : Text("No data"),
+              shopCardList.length != 0 ? shopCardList[1] : Text("No data"),
+              shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
 
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
-              ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-                  "Beauty salon in Nugegoda "),
+              // ListView.builder(
+              //     itemCount: shopList.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return ShopCard(shopList[index].shopName,
+              //           shopList[index].shopAddress, shopList[index].district);
+              //     }),
+
+              // ShopCard("Dummy began", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
+              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
+              //     "Beauty salon in Nugegoda "),
             ],
           ),
         ),
@@ -262,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             // Navigator.of(context).push(new MaterialPageRoute(
             //     builder: (BuildContext context) => new Test()));
-            getShop();
+            getShop(context);
           },
           tooltip: 'Increment',
           child: Icon(Icons.bubble_chart),
@@ -370,9 +379,10 @@ class _MyHomePageState extends State<MyHomePage> {
   //functions
 
   //this is to get shop details
-  Future<void> getShop() async {
+  Future<void> getShop(BuildContext context) async {
     var result = await httpGet('shop');
     if (result.ok) {
+      print("shop details recived");
       setState(() {
         shopList.clear();
         var in_shop = result.data as List<dynamic>;
@@ -386,6 +396,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // print(shopList[1].shopName);
         // print(shopList[2].shopName);
       });
+    } else if (!result.ok) {
+      // final snackBar = SnackBar(content: Text('Connection Error'));
+      // Scaffold.of(context).showSnackBar(snackBar);
+      shopList.clear();
+      setState(() {});
+      print("Unable to get data");
     }
   }
 
