@@ -394,6 +394,7 @@ class _MyHomePageState extends State<MyHomePage> {
               in_shop['salon_address'],
               in_shop['district'],
               in_shop['contact']));
+          //print(in_shop['contact'].toString());
         });
         print(shopList.length.toString());
         createUI();
@@ -414,8 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
   createUI() {
     int i;
     for (i = 0; i < shopList.length; i++) {
-      shopCardList.add(ShopCard(Shop(shopList[i].shopID, shopList[i].shopName,
-          shopList[i].shopAddress, shopList[i].district)));
+      shopCardList.add(ShopCard(shopList[i]));
     }
   }
 }

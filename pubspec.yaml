@@ -32,6 +32,7 @@ dependencies:
   simple_animations: ^2.2.1
   nice_button: ^0.1.7
   credit_card: ^0.1.6
+  url_launcher: ^5.5.0
   
 
 
