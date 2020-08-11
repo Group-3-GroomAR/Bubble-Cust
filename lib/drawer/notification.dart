@@ -3,7 +3,7 @@ import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//import 'moredetails.dart';
+import 'moredetails.dart';
 
 
 class NotificationPage extends StatefulWidget {
@@ -138,8 +138,8 @@ class _NotificationState extends State<NotificationPage> {
                           RaisedButton(
                             child: Text("More Details -->"),
                             onPressed:(){
-                              //Navigator.of(context).push(new MaterialPageRoute(
-                                  //builder: (BuildContext context) => new NotificationDetails()));
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (BuildContext context) => new NotificationDetails()));
                             },
                             color: Colors.black,
                             textColor: Colors.white,
