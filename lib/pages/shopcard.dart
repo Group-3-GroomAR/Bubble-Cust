@@ -76,28 +76,6 @@ class _ShopCardState extends State<ShopCard> {
                     ),
                     Row(
                       children: [
-                        Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                        ),
-                        Icon(Icons.star, color: Colors.grey),
-                        Icon(Icons.star, color: Colors.grey),
-                        Text(
-                          "4.5(413)",
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
                         Text(
                           _shop.shopAddress,
                           style: TextStyle(color: Colors.black),
@@ -112,40 +90,42 @@ class _ShopCardState extends State<ShopCard> {
                         )
                       ],
                     ),
-                    Divider(thickness: 1),
-                    Row(
-                      children: [
-                        Text(
-                          "Today's availability",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        )
-                      ],
-                    ),
-                    Wrap(
-                      spacing: 3,
-                      children: [
-                        Chip(
-                          label: Text("5:30PM"),
-                          elevation: 5,
-                        ),
-                        Chip(
-                          label: Text(
-                            "7:30PM",
-                            style: TextStyle(color: Colors.deepPurple),
-                          ),
-                          elevation: 5,
-                          backgroundColor: Colors.purple.shade100,
-                        ),
-                        Chip(
-                          label: Text("8:00PM"),
-                          elevation: 5,
-                        ),
-                        Chip(
-                          label: Text("9:00PM"),
-                          elevation: 5,
-                        ),
-                      ],
-                    ),
+
+                    Padding(padding: EdgeInsets.only(bottom: 10))
+                    // Divider(thickness: 1),
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       "Today's availability",
+                    //       style: TextStyle(color: Colors.black, fontSize: 20),
+                    //     )
+                    //   ],
+                    // ),
+                    // Wrap(
+                    //   spacing: 3,
+                    //   children: [
+                    //     Chip(
+                    //       label: Text("5:30PM"),
+                    //       elevation: 5,
+                    //     ),
+                    //     Chip(
+                    //       label: Text(
+                    //         "7:30PM",
+                    //         style: TextStyle(color: Colors.deepPurple),
+                    //       ),
+                    //       elevation: 5,
+                    //       backgroundColor: Colors.purple.shade100,
+                    //     ),
+                    //     Chip(
+                    //       label: Text("8:00PM"),
+                    //       elevation: 5,
+                    //     ),
+                    //     Chip(
+                    //       label: Text("9:00PM"),
+                    //       elevation: 5,
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               )

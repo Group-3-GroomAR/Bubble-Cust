@@ -29,123 +29,99 @@ class _ShopDetailState extends State<ShopDetail> {
       appBar: AppBar(
         title: Text("Shop details"),
       ),
-//      body:SingleChildScrollView(
-//              child: Container(
-//              padding: EdgeInsets.symmetric(horizontal: 24),
-//              child: Column(
-//              crossAxisAlignment: CrossAxisAlignment.start,
-//              children: <Widget>[
-//              Wrap(
-//              children: <Widget>[
-////              Image.asset("assets/images/scissors.jpg", height: 220),
-//              SizedBox(
-//              width: 20,
-//              ),
-//              Container(
-//              width: MediaQuery.of(context).size.width - 222,
-//              height: 220,
-//              child: Column(
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              crossAxisAlignment: CrossAxisAlignment.start,
-//            children: <Widget>[
-//            Text(
-//            "Dr. Stefeni Albert",
-//            style: TextStyle(fontSize: 32),
-//            ),
-//            Text(
-//            "Heart Speailist",
-//            style: TextStyle(fontSize: 19, color: Colors.grey),
-//            ),
-//            SizedBox(
-//            height: 40,
-//            ),
-//            Row(
-//            children: <Widget>[
-//              IconButton(
-//                icon: Icon(Icons.call),
-//              ),
-//              IconButton(
-//                icon: Icon(Icons.email),
-//              ),
-//
-//              IconButton(
-//                icon: Icon(Icons.video_call),
-//              )
-////            IconTile(
-////            backColor: Color(0xffFFECDD),
-////            imgAssetPath: "assets/email.png",
-////            ),
-////            IconTile(
-////            backColor: Color(0xffFEF2F0),
-////            imgAssetPath: "assets/call.png",
-////            ),
-////            IconTile(
-////            backColor: Color(0xffEBECEF),
-////            imgAssetPath: "assets/video_call.png",
-//
-//            ],
-//            )
-//            ],
-//            ),
-//            ),
-//            ],
-//            ),
-////                Center(
-////                  child: Text(_shop.contact.toString()),
-////                ),
-//              ])
-//        ,
-//      ),
-//      ),
-      
-      
-      body:ListView(
-        padding: new EdgeInsets.all(5.0),
-        children: [
-          Wrap(
-            spacing: 10,
-            children: [
-              Image.network('https://picsum.photos/250?image=9',
-                fit: BoxFit.fitHeight,
-                width: 100,
-                height: 200,
+      body: Container(
+        child: ListView(
+          children: [
+            Card(
+              elevation: 6,
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Container(
+                height: 300,
+                width: MediaQuery.of(context).size.width,
+                child: Image.network(
+                  _shop.image,
+                  fit: BoxFit.cover,
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      "${_shop.shopName}",
-                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
-                      ),
-                  Text("District:${_shop.district}",
-                    style: TextStyle(fontSize: 15)),
-
-                  Wrap(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.call),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.email),
-                        ),
-
-                        IconButton(
-                          icon: Icon(Icons.video_call),
-                        )
-
-                    ],
-                  )
-
-
-
-
-                ],
-              )
-            ],
-          )
-        ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                _shop.shopName,
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              title: Text("About"),
+              subtitle: Text(
+                  "Men and Women saloon and spa with high safety messure.Permition got from Sri Lanka Health Ministry"),
+            ),
+            ListTile(
+              leading: Icon(Icons.location_searching),
+              title: Text(_shop.shopAddress),
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text(_shop.contact.toString()),
+              onTap: () => setState(() {
+                _launched = _makePhoneCall('tel:$_tel');
+              }),
+            ),
+            ListTile(
+              leading: Icon(Icons.map),
+              title: Text(_shop.district),
+            ),
+          ],
+        ),
       ),
+
+      // body: ListView(
+      //   padding: new EdgeInsets.all(5.0),
+      //   children: [
+      //     Wrap(
+      //       spacing: 10,
+      //       children: [
+      //         Image.network(
+      //           'https://picsum.photos/250?image=9',
+      //           fit: BoxFit.fitHeight,
+      //           width: 100,
+      //           height: 200,
+      //         ),
+      //         Column(
+      //           mainAxisAlignment: MainAxisAlignment.start,
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //             Text(
+      //               "${_shop.shopName}",
+      //               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      //             ),
+      //             Text("District:${_shop.district}",
+      //                 style: TextStyle(fontSize: 15)),
+      //             Wrap(
+      //               children: [
+      //                 IconButton(
+      //                   icon: Icon(Icons.call),
+      //                 ),
+      //                 IconButton(
+      //                   icon: Icon(Icons.email),
+      //                 ),
+      //                 IconButton(
+      //                   icon: Icon(Icons.video_call),
+      //                 )
+      //               ],
+      //             )
+      //           ],
+      //         )
+      //       ],
+      //     )
+      //   ],
+      // ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() {
