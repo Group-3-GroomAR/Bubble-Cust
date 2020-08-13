@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:bubbletest/extra/date.dart';
 import 'package:bubbletest/extra/shop.dart';
+import 'package:bubbletest/pages/service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,12 +17,15 @@ class ShopDetail extends StatefulWidget {
 class _ShopDetailState extends State<ShopDetail> {
   Shop _shop;
   String _tel;
+  List<DateTime> dateList = new List(7); //to add DateTime object
   _ShopDetailState(this._shop);
   Future<void> _launched;
 
   @override
   void initState() {
     _tel = _shop.contact.toString();
+    dateList = createDateTimeList();
+
     // TODO: implement initState
     super.initState();
   }
@@ -29,8 +36,8 @@ class _ShopDetailState extends State<ShopDetail> {
       appBar: AppBar(
         title: Text("Shop details"),
       ),
-      body: Container(
-        child: ListView(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Card(
               elevation: 6,
@@ -48,6 +55,9 @@ class _ShopDetailState extends State<ShopDetail> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
+            // Wrap(
+            //   children: [Text(dateList.toString())],
+            // ),
             ListTile(
               title: Text(
                 _shop.shopName,
@@ -63,7 +73,7 @@ class _ShopDetailState extends State<ShopDetail> {
                   "Men and Women saloon and spa with high safety messure.Permition got from Sri Lanka Health Ministry"),
             ),
             ListTile(
-              leading: Icon(Icons.location_searching),
+              leading: Icon(Icons.location_on),
               title: Text(_shop.shopAddress),
             ),
             ListTile(
@@ -77,59 +87,67 @@ class _ShopDetailState extends State<ShopDetail> {
               leading: Icon(Icons.map),
               title: Text(_shop.district),
             ),
+
+            ExpansionTile(
+              title: Text(
+                "Available Dates",
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
+              children: createTitle(dateList),
+            )
           ],
         ),
       ),
-
-      // body: ListView(
-      //   padding: new EdgeInsets.all(5.0),
-      //   children: [
-      //     Wrap(
-      //       spacing: 10,
-      //       children: [
-      //         Image.network(
-      //           'https://picsum.photos/250?image=9',
-      //           fit: BoxFit.fitHeight,
-      //           width: 100,
-      //           height: 200,
-      //         ),
-      //         Column(
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: [
-      //             Text(
-      //               "${_shop.shopName}",
-      //               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //             ),
-      //             Text("District:${_shop.district}",
-      //                 style: TextStyle(fontSize: 15)),
-      //             Wrap(
-      //               children: [
-      //                 IconButton(
-      //                   icon: Icon(Icons.call),
-      //                 ),
-      //                 IconButton(
-      //                   icon: Icon(Icons.email),
-      //                 ),
-      //                 IconButton(
-      //                   icon: Icon(Icons.video_call),
-      //                 )
-      //               ],
-      //             )
-      //           ],
-      //         )
-      //       ],
-      //     )
-      //   ],
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => setState(() {
+      //     _launched = _makePhoneCall('tel:$_tel');
+      //   }),
+      //   child: Icon(Icons.call),
       // ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {
-          _launched = _makePhoneCall('tel:$_tel');
-        }),
-        child: Icon(Icons.call),
-      ),
     );
+  }
+
+  // DateTime getCurrentWeek() {
+  //   var currentDate = new DateTime.now();
+  //   return currentDate;
+  // }
+
+  List<DateTime> createDateTimeList() {
+    List<DateTime> dateList = List(7);
+    var currentDate = new DateTime.now();
+    int i;
+
+    for (i = 0; i < 7; i++) {
+      dateList[i] = currentDate.add(Duration(days: i));
+    }
+    print(dateList.toString());
+    return dateList;
+  }
+
+  List<Widget> createTitle(List<DateTime> date) {
+    List<ListTile> tile = List(7);
+    int i;
+
+    for (i = 0; i < date.length; i++) {
+      tile[i] = ListTile(
+        subtitle:
+            Text("${dateList[i].day}/${dateList[i].month}/${dateList[i].year}"),
+        title: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            new Text(getWeekName(date[i].weekday)),
+            new Text("9:00AM-10:00PM"),
+          ],
+        ),
+        onTap: () => {
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  new ServicePage(_shop, DateTime.now())))
+        },
+      );
+      print("Done");
+    }
+    return tile;
   }
 
   Future<void> _makePhoneCall(String url) async {
