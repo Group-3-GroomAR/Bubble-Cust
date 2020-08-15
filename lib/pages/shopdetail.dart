@@ -1,8 +1,5 @@
-import 'dart:developer';
-
-import 'package:bubbletest/extra/date.dart';
 import 'package:bubbletest/extra/shop.dart';
-import 'package:bubbletest/pages/service.dart';
+import 'package:bubbletest/pages/weeklisttile.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -89,6 +86,7 @@ class _ShopDetailState extends State<ShopDetail> {
             ),
 
             ExpansionTile(
+              maintainState: true,
               title: Text(
                 "Available Dates",
                 style: TextStyle(color: Colors.black, fontSize: 20),
@@ -125,26 +123,12 @@ class _ShopDetailState extends State<ShopDetail> {
   }
 
   List<Widget> createTitle(List<DateTime> date) {
-    List<ListTile> tile = List(7);
+    List<DateTime> dateTime = date;
+    List<WeekListTile> tile = List(7);
     int i;
 
     for (i = 0; i < date.length; i++) {
-      tile[i] = ListTile(
-        subtitle:
-            Text("${dateList[i].day}/${dateList[i].month}/${dateList[i].year}"),
-        title: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            new Text(getWeekName(date[i].weekday)),
-            new Text("9:00AM-10:00PM"),
-          ],
-        ),
-        onTap: () => {
-          Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  new ServicePage(_shop, DateTime.now())))
-        },
-      );
+      tile[i] = WeekListTile(date[i], _shop);
       print("Done");
     }
     return tile;

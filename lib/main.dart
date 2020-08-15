@@ -393,7 +393,10 @@ class _MyHomePageState extends State<MyHomePage> {
               in_shop['shop_name'],
               in_shop['salon_address'],
               in_shop['district'],
-              in_shop['contact']));
+              in_shop['contact'],
+              in_shop['email'],
+              in_shop['about']
+          ));
           //print(in_shop['contact'].toString());
         });
         print(shopList.length.toString());

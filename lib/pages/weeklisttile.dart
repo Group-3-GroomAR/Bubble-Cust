@@ -1,6 +1,6 @@
 import 'package:bubbletest/extra/date.dart';
 import 'package:bubbletest/extra/shop.dart';
-import 'package:bubbletest/pages/service.dart';
+import 'package:bubbletest/pages/servicepage.dart';
 import 'package:flutter/material.dart';
 
 class WeekListTile extends StatelessWidget {
