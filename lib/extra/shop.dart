@@ -17,7 +17,7 @@ class Shop {
 
   Shop(this._shopID, this._shopName, this._shopAddress, this._district);
   Shop.contact(this._shopID, this._shopName, this._shopAddress, this._district,
-      this._contact,this._email,this._about);
+      this._contact, this._email, this._about);
 
   String get shopName => _shopName;
 

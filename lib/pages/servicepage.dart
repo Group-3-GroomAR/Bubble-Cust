@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/shop.dart';
-import 'package:bubbletest/pages/service.dart';
+import 'package:bubbletest/extra/service.dart';
 import 'package:bubbletest/pages/weeklisttile.dart';
 import 'package:flutter/material.dart';
 

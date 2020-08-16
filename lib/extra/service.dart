@@ -1,29 +1,27 @@
-class Service
-{
+class Service {
   int _serviceID;
   String _salonID;
   bool _isMale;
   bool _isFemale;
   bool _isChildren;
   String _serviceName;
-  int _price;      //in lk rupeese
-  int _duration;   //in  mins
+  int _price; //in lk rupeese
+  int _duration; //in  mins
   String _serviceCategory;
 
-  bool _isAdd=false;
-
+  bool _isAdd = false; //to add to cart
 
   Service(
-      this._serviceID,
-      this._salonID,
-      this._isMale,
-      this._isFemale,
-      this._isChildren,
-      this._serviceName,
-      this._price,
-      this._duration,
-      this._serviceCategory,
-      );
+    this._serviceID,
+    this._salonID,
+    this._isMale,
+    this._isFemale,
+    this._isChildren,
+    this._serviceName,
+    this._price,
+    this._duration,
+    this._serviceCategory,
+  );
 
   int get serviceID => _serviceID;
 

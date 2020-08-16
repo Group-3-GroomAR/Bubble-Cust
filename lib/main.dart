@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             // Navigator.of(context).push(new MaterialPageRoute(
             //     builder: (BuildContext context) => new Test()));
-            getShop(context);
+            getShop();
           },
           tooltip: 'Increment',
           child: Icon(Icons.bubble_chart),
@@ -380,10 +380,10 @@ class _MyHomePageState extends State<MyHomePage> {
   //functions
 
   //this is to get shop details
-  Future<void> getShop(BuildContext context) async {
+  Future<void> getShop() async {
     var result = await httpGet('shoplist');
     if (result.ok) {
-      print("shop details recived");
+      print("shop details recived to Main");
       setState(() {
         shopList.clear();
         var inShop = result.data as List<dynamic>;
@@ -409,7 +409,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Scaffold.of(context).showSnackBar(snackBar);
       shopList.clear();
       setState(() {});
-      print("Unable to get data");
+      print("Unable to get data to Main");
     }
   }
 
