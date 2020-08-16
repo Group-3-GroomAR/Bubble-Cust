@@ -12,8 +12,8 @@ const DOMAIN = "192.168.43.70:3000";
 
 Future<RequestResult> httpGet(String route, [dynamic data]) async {
   var dataStr = jsonEncode(data);
-  print("l");
   print(dataStr);
+  //print(dataStr);
   var url = "$PROTOCOL://$DOMAIN/$route?data=$dataStr";
   //var url = "$PROTOCOL://$DOMAIN/$route";
   print("l");
@@ -24,6 +24,7 @@ Future<RequestResult> httpGet(String route, [dynamic data]) async {
     //print(result.body);
     return RequestResult(true, jsonDecode(result.body));
   } catch (e) {
+    print("Got an server error");
     print(e.toString());
     return RequestResult(false, "Connection error");
   }

@@ -41,11 +41,25 @@ app.get('/tom', function (req, res) {
 });
 
 
+//get shop details from database for main
 app.get('/shoplist',async(req,res,next)=>{
   console.log("getting shop details");
   const [rows]=await db.query("SELECT * FROM salon;");
 
   res.json(rows);
+  next();
+}
+)
+
+
+app.get('/servicelist',async(req,res,next)=>{
+   const shop=req;
+  //const shop="Pizza hut"
+
+  console.log(req.query);
+  //const [rows]=await db.query("SELECT * FROM salon;");
+
+  //res.json(rows);
   next();
 }
 )

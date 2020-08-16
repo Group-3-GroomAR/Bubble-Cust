@@ -386,20 +386,19 @@ class _MyHomePageState extends State<MyHomePage> {
       print("shop details recived");
       setState(() {
         shopList.clear();
-        var in_shop = result.data as List<dynamic>;
-        in_shop.forEach((in_shop) {
+        var inShop = result.data as List<dynamic>;
+        inShop.forEach((inShop) {
           shopList.add(Shop.contact(
-              in_shop['salon_id'],
-              in_shop['shop_name'],
-              in_shop['salon_address'],
-              in_shop['district'],
-              in_shop['contact'],
-              in_shop['email'],
-              in_shop['about']
-          ));
+              inShop['salon_id'],
+              inShop['shop_name'],
+              inShop['salon_address'],
+              inShop['district'],
+              inShop['contact'],
+              inShop['email'],
+              inShop['about']));
           //print(in_shop['contact'].toString());
         });
-        print(shopList.length.toString());
+        //print(shopList.length.toString());
         createUI();
         // print(shopList[0].shopName);
         // print(shopList[1].shopName);
