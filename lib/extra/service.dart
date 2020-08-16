@@ -1,11 +1,11 @@
 class Service {
   int _serviceID;
   String _salonID;
-  bool _isMale;
-  bool _isFemale;
-  bool _isChildren;
+  int _isMale;
+  int _isFemale;
+  int _isChildren;
   String _serviceName;
-  int _price; //in lk rupeese
+  double _price; //in lk rupeese
   int _duration; //in  mins
   String _serviceCategory;
 
@@ -43,9 +43,9 @@ class Service {
     _duration = value;
   }
 
-  int get price => _price;
+  double get price => _price;
 
-  set price(int value) {
+  set price(double value) {
     _price = value;
   }
 
@@ -55,21 +55,21 @@ class Service {
     _serviceName = value;
   }
 
-  bool get isChildren => _isChildren;
+  int get isChildren => _isChildren;
 
-  set isChildren(bool value) {
+  set isChildren(int value) {
     _isChildren = value;
   }
 
-  bool get isFemale => _isFemale;
+  int get isFemale => _isFemale;
 
-  set isFemale(bool value) {
+  set isFemale(int value) {
     _isFemale = value;
   }
 
-  bool get isMale => _isMale;
+  int get isMale => _isMale;
 
-  set isMale(bool value) {
+  set isMale(int value) {
     _isMale = value;
   }
 

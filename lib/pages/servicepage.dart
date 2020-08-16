@@ -20,7 +20,7 @@ class _ServicePageState extends State<ServicePage> {
   DateTime _date;
   _ServicePageState(this._shop, this._date);
 
-  List<Service> serviceList;
+  List<Service> serviceList = [];
 
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _ServicePageState extends State<ServicePage> {
               inService['is_female'],
               inService['is_childrn'],
               inService['service_name'],
-              inService['price'],
+              double.parse(inService['price']),
               inService['duration'],
               inService['service_category']));
         });
