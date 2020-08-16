@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:bubbletest/extra/service.dart';
+import 'package:bubbletest/pages/servicecard.dart';
 import 'package:bubbletest/pages/weeklisttile.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,15 @@ class _ServicePageState extends State<ServicePage> {
         body: Container(
             child: ListView(
           children: [
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
+            // ServiceCard(),
             WeekListTile(_date, _shop),
             WeekListTile(_date, _shop),
             WeekListTile(_date, _shop),
@@ -64,7 +74,9 @@ class _ServicePageState extends State<ServicePage> {
     if (result.ok) {
       print("shop details recived");
       setState(() {
-        serviceList.clear();
+        if (serviceList != null) {
+          serviceList.clear();
+        }
         var inService = result.data as List<dynamic>;
         inService.forEach((inService) {
           serviceList.add(Service(

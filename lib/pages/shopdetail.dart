@@ -22,7 +22,6 @@ class _ShopDetailState extends State<ShopDetail> {
   void initState() {
     _tel = _shop.contact.toString();
     dateList = createDateTimeList();
-
     // TODO: implement initState
     super.initState();
   }
@@ -66,8 +65,7 @@ class _ShopDetailState extends State<ShopDetail> {
             ),
             ListTile(
               title: Text("About"),
-              subtitle: Text(
-                  "Men and Women saloon and spa with high safety messure.Permition got from Sri Lanka Health Ministry"),
+              subtitle: Text(_shop.about),
             ),
             ListTile(
               leading: Icon(Icons.location_on),

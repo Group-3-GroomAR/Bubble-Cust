@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _city = _cityList[0];
 
     //this is for test
-    //getShop();
+    getShop();
   }
 
   @override

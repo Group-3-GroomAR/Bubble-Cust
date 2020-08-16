@@ -53,13 +53,13 @@ app.get('/shoplist',async(req,res,next)=>{
 
 
 app.get('/servicelist',async(req,res,next)=>{
-   const shop=req;
-  //const shop="Pizza hut"
+   var obj=JSON.parse(req.query.data);
+  
+  var sql=`SELECT * FROM service WHERE salon_id='${obj.shopId}'`;
+  console.log(sql);
+  const [rows]=await db.query(sql);
 
-  console.log(req.query);
-  //const [rows]=await db.query("SELECT * FROM salon;");
-
-  //res.json(rows);
+  res.json(rows);
   next();
 }
 )

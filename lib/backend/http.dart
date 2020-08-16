@@ -12,7 +12,7 @@ const DOMAIN = "192.168.43.70:3000";
 
 Future<RequestResult> httpGet(String route, [dynamic data]) async {
   var dataStr = jsonEncode(data);
-  print(dataStr);
+  //print(dataStr);
   //print(dataStr);
   var url = "$PROTOCOL://$DOMAIN/$route?data=$dataStr";
   //var url = "$PROTOCOL://$DOMAIN/$route";
