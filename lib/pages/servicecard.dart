@@ -15,21 +15,26 @@ class _ServiceCardState extends State<ServiceCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // padding: const EdgeInsets.all(5),
       child: Card(
-        elevation: 10,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        shadowColor: Colors.grey,
-        child: ListTile(
-          title: Text("Hair Cut"),
-          subtitle: Text("Hair"),
-          trailing: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              onPressed: () {},
-              color: Colors.blue,
-              child: Text("ADD")),
-        ),
-      ),
+          elevation: 10,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shadowColor: Colors.grey,
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            child: ListTile(
+              title: Text(_service.serviceName),
+              subtitle: Text(
+                  "Duration:${_service.duration}\nPrice:${_service.price}"),
+              trailing: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  onPressed: () {},
+                  color: Colors.blue,
+                  child: Text("ADD")),
+            ),
+          )),
     );
   }
 }

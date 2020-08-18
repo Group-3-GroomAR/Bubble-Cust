@@ -23,6 +23,11 @@ class Service {
     this._serviceCategory,
   );
 
+  bool get isAdd => _isAdd;
+  set isAdd(bool val) {
+    _isAdd = val;
+  }
+
   int get serviceID => _serviceID;
 
   set serviceID(int value) {
