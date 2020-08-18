@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "899545420217",
+    "firebase_url": "https://groomar-grp3.firebaseio.com",
+    "project_id": "groomar-grp3",
+    "storage_bucket": "groomar-grp3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899545420217:android:d79135549f06d9cd3c2668",
+        "android_client_info": {
+          "package_name": "com.example.bubble_saloon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899545420217-5nc39okmkv7cm4o6qpmmoj2jdakn9f20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bubble_saloon",
+            "certificate_hash": "04a1b354cd8914aea59db38b0579b012ac08c3cd"
+          }
+        },
+        {
+          "client_id": "899545420217-di0vg3bauq0rb57e4fkmrj78cf3cv4ef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bubble_saloon",
+            "certificate_hash": "695ecbbdd0dbab3f8469a87e2ed19166c7b091f2"
+          }
+        },
+        {
+          "client_id": "899545420217-kp7k98nar05l6261tqbdb19604hrbsce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrNIh2TTj2x3F9uNY7wB92lygzf9Abxms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899545420217-kp7k98nar05l6261tqbdb19604hrbsce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899545420217:android:f8fdefc80cc9db5e3c2668",
+        "android_client_info": {
+          "package_name": "com.example.bubbletest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899545420217-09orjs69p0va8vconmcm7msdmcjhc6b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bubbletest",
+            "certificate_hash": "ce450fc31c524490b683ff0ac4d577d9239f6927"
+          }
+        },
+        {
+          "client_id": "899545420217-kp7k98nar05l6261tqbdb19604hrbsce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrNIh2TTj2x3F9uNY7wB92lygzf9Abxms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899545420217-kp7k98nar05l6261tqbdb19604hrbsce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
