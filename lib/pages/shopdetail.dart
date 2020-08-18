@@ -108,6 +108,7 @@ class _ShopDetailState extends State<ShopDetail> {
   //   return currentDate;
   // }
 
+  //this is creating upcoming 7 days
   List<DateTime> createDateTimeList() {
     List<DateTime> dateList = List(7);
     var currentDate = new DateTime.now();
