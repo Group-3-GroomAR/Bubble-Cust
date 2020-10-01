@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bubbletest/extra/service.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/material.dart';
+import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 
 class Payment extends StatefulWidget {
   final Shop obj;
@@ -219,5 +220,38 @@ class _PaymentState extends State<Payment> {
       }
     }
     return price;
+  }
+
+  void payhere() {
+    Map paymentObject = {
+      "sandbox": true, // true if using Sandbox Merchant ID
+      "merchant_id": "1215551", // Replace your Merchant ID
+      "merchant_secret":
+          "4Dzf8ohdPcH8X138aXOkHy4JHKuX6h89j4Ob7OK8LoIx", // See step 4e
+      "order_id": "ItemNo12345",
+      "items": "Hello from Flutter!",
+      "amount": "50.00",
+      "currency": "LKR",
+      "first_name": "Saman",
+      "last_name": "Perera",
+      "email": "abc@gmail.com",
+      "phone": "0771234567",
+      "address": "No.1, Galle Road",
+      "city": "Colombo",
+      "country": "Sri Lanka",
+      "delivery_address": "No. 46, Galle road, Kalutara South",
+      "delivery_city": "Kalutara",
+      "delivery_country": "Sri Lanka",
+      "custom_1": "",
+      "custom_2": ""
+    };
+
+    PayHere.startPayment(paymentObject, (paymentId) {
+      print("One Time Payment Success. Payment Id: $paymentId");
+    }, (error) {
+      print("One Time Payment Failed. Error: $error");
+    }, () {
+      print("One Time Payment Dismissed");
+    });
   }
 }
