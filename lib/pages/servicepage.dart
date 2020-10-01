@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:bubbletest/backend/http.dart';
+import 'package:bubbletest/extra/date.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:bubbletest/extra/service.dart';
+import 'package:bubbletest/pages/payment.dart';
 import 'package:flutter/material.dart';
 
 class ServicePage extends StatefulWidget {
@@ -13,11 +15,11 @@ class ServicePage extends StatefulWidget {
 }
 
 class _ServicePageState extends State<ServicePage> {
-  Shop _shop;
-  DateTime _date;
+  Shop _shop; //detail of the shop
+  DateTime _date; //date which choosen
   _ServicePageState(this._shop, this._date);
 
-  List<Service> serviceList = [];
+  List<Service> serviceList = []; //this is to add payment details
   double _total = 0;
 
   @override
@@ -31,7 +33,7 @@ class _ServicePageState extends State<ServicePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Service",
+          "${getWeekName(_date.weekday)}",
         ),
       ),
       body: Container(
@@ -60,7 +62,7 @@ class _ServicePageState extends State<ServicePage> {
                                 setState(() {
                                   bool temp = serviceList[index].isAdd;
                                   serviceList[index].isAdd = !temp;
-                                  _total = getTotal(); 
+                                  _total = getTotal();
                                 });
                               },
                               color: serviceList[index].isAdd
@@ -78,11 +80,21 @@ class _ServicePageState extends State<ServicePage> {
                       )),
                 );
               })),
+
+      //total showing button
       floatingActionButton: RaisedButton(
         padding:
             const EdgeInsets.only(top: 12, bottom: 12, left: 30, right: 30),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        onPressed: () {},
+        onPressed: () {
+          // print(_total);
+          if (_total == 0) {
+          } else {
+            Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    new Payment(this._shop, this._date, this.serviceList)));
+          }
+        },
         child: Wrap(
           children: [
             Text("Total:\t ${_total}",

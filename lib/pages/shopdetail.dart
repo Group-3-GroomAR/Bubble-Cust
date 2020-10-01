@@ -30,7 +30,7 @@ class _ShopDetailState extends State<ShopDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shop details"),
+        title: Text("${_shop.shopName}"),
       ),
       body: SingleChildScrollView(
         child: Column(
