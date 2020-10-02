@@ -154,7 +154,10 @@ class _PaymentState extends State<Payment> {
         padding:
             const EdgeInsets.only(top: 12, bottom: 12, left: 30, right: 30),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        onPressed: () {},
+        onPressed: () {
+          payhere();
+
+        },
         child: Wrap(
           children: [
             Text("Book Now",
@@ -228,13 +231,14 @@ class _PaymentState extends State<Payment> {
       "merchant_id": "1215551", // Replace your Merchant ID
       "merchant_secret":
           "4Dzf8ohdPcH8X138aXOkHy4JHKuX6h89j4Ob7OK8LoIx", // See step 4e
+      "notify_url": "http://sample.com/notify",
       "order_id": "ItemNo12345",
       "items": "Hello from Flutter!",
       "amount": "50.00",
       "currency": "LKR",
       "first_name": "Saman",
       "last_name": "Perera",
-      "email": "abc@gmail.com",
+      "email": "samanp@gmail.com",
       "phone": "0771234567",
       "address": "No.1, Galle Road",
       "city": "Colombo",
