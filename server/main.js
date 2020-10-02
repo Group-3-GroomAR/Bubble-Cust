@@ -30,6 +30,7 @@ app.post('/tom', async(req, res, next)=>{
 //   var sql = `INSERT INTO salon (name,email,location,mobile,certifiednumber,password) VALUES ('${name}','${email}','${location}','${mobile}','${certifiednumber}','qwerty123')`;
 //   // var connection = connection.query(sql, function(err,rows,fields) {});
 //  await db.query(sql,function(err,rows,fields) {});
+  console.log("Getting tom");
 
   res.send({status:"OK"});
   next();
@@ -51,12 +52,76 @@ app.get('/shoplist',async(req,res,next)=>{
 }
 )
 
+//get the availble time of a date fo the reservation
+app.get('/availabletime',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+
+  console.log(`getting avalable time for ${obj.shopId} at ${obj.day}/${obj.month}/${obj.year}`);    
+
+  var sql=`SELECT start_time FROM reservation WHERE salon_id='${obj.shopId}' AND date='${obj.year}-${obj.month}-${obj.day}'`;
+ // var sql=`SELECT end_time FROM reservation WHERE salon_id='ax3' AND date='2020-08-18'`;
+  
+  const [rows]=await db.query(sql);     //sending the request
+
+  var len=rows.length;
+  var availabletime;
+  
+  //this is getting the time 
+  if(len>0)   //if there is a time 
+  {
+    var i;    //this is for loop
+    var max;
+    for(i=0;i<len;i++)
+    {
+      if(i==0)
+      {
+        max=rows[i].end_time;
+      }
+      else{
+        if(rows[i].end_time>max)
+        {
+          max=rows[i].end_time;
+        }
+      }
+      //console.log(max);
+      
+    }
+    availabletime=max;    //setting the max finising time as a available time
+    
+
+  }
+  else    //if their is no time in a day or previes reservation
+  {
+    var sql2=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
+    const [row2]=await db.query(sql2);     //sending the request
+    //console.log(row2[0].is_open);
+
+    if(row2[0].is_open==1)
+    {
+      availabletime=row2[0].open_time;
+    }
+    else
+    {
+      availabletime=0;
+    }
+    
+  }
+
+  res.send({time:availabletime});
+  next();
+}
+)
+
+
+
+
+
 
 app.get('/servicelist',async(req,res,next)=>{
-   var obj=JSON.parse(req.query.data);
-  
+   var obj=JSON.parse(req.query.data);    //obj has all the values
+   console.log(`getting shoplist for shop'${obj.shopId}'`);  
   var sql=`SELECT * FROM service WHERE salon_id='${obj.shopId}'`;
-  console.log(sql);
+  
   const [rows]=await db.query(sql);
 
   res.json(rows);

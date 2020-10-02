@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/service.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,16 @@ class Payment extends StatefulWidget {
 class _PaymentState extends State<Payment> {
   Shop _shop;
   DateTime _dateTime;
-  List<Service> _serviceList;
-  String _service;
-  String _price;
-  String _note;
+  List<Service> _serviceList; //abouve 3 variables are for get object
+  String _note; //to get notes
+  String _availableTime = "Loading..";
 
   _PaymentState(this._shop, this._dateTime, this._serviceList);
+
+  @override
+  void initState() {
+    getAvailableTime();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,7 @@ class _PaymentState extends State<Payment> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 trailing: Text(
-                  "10.20 AM",
+                  _availableTime,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               )),
@@ -155,8 +160,10 @@ class _PaymentState extends State<Payment> {
             const EdgeInsets.only(top: 12, bottom: 12, left: 30, right: 30),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         onPressed: () {
-          payhere();
-
+          //print("Payment ${payhere()}");
+          //payhere();
+          //makeReservation("TTTT");
+          getAvailableTime();
         },
         child: Wrap(
           children: [
@@ -225,21 +232,24 @@ class _PaymentState extends State<Payment> {
     return price;
   }
 
-  void payhere() {
+  //this is paythere gateway method to make payment and get a reference number
+  String payhere() {
+    double _price = getTotal();
+
     Map paymentObject = {
       "sandbox": true, // true if using Sandbox Merchant ID
       "merchant_id": "1215551", // Replace your Merchant ID
       "merchant_secret":
           "4Dzf8ohdPcH8X138aXOkHy4JHKuX6h89j4Ob7OK8LoIx", // See step 4e
       "notify_url": "http://sample.com/notify",
-      "order_id": "ItemNo12345",
+      "order_id": "ItemNox",
       "items": "Hello from Flutter!",
-      "amount": "50.00",
+      "amount": _price.toString(),
       "currency": "LKR",
-      "first_name": "Saman",
-      "last_name": "Perera",
-      "email": "samanp@gmail.com",
-      "phone": "0771234567",
+      "first_name": "Tom",
+      "last_name": "Jobs",
+      "email": "ajaydomi112@gmail.com",
+      "phone": "0772348189",
       "address": "No.1, Galle Road",
       "city": "Colombo",
       "country": "Sri Lanka",
@@ -252,10 +262,40 @@ class _PaymentState extends State<Payment> {
 
     PayHere.startPayment(paymentObject, (paymentId) {
       print("One Time Payment Success. Payment Id: $paymentId");
+      // reservation code to connect database
+      makeReservation(paymentId);
     }, (error) {
       print("One Time Payment Failed. Error: $error");
     }, () {
       print("One Time Payment Dismissed");
+    });
+  }
+
+  Future<void> makeReservation(String refId) async {
+    //print("Pass to th is $refId");
+    var result = await httpPost("tom", {
+      "name": "Tom",
+    });
+    print(result.data);
+  }
+
+  //get available time to make reservation
+  Future<void> getAvailableTime() async {
+    String _day = _dateTime.day.toString();
+    String _month = _dateTime.month.toString();
+    String _year = _dateTime.year.toString();
+
+    var result = await httpGet("availabletime", {
+      "day": _day,
+      "month": _month,
+      "year": _year,
+      "shopId": _shop.shopID,
+      "week": _dateTime.weekday
+    });
+
+    //print("got the data form server ${result.data['time']}");
+    setState(() {
+      _availableTime = result.data['time'];
     });
   }
 }
