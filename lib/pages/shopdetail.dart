@@ -122,7 +122,6 @@ class _ShopDetailState extends State<ShopDetail> {
   }
 
   List<Widget> createTitle(List<DateTime> date) {
-    List<DateTime> dateTime = date;
     List<WeekListTile> tile = List(7);
     int i;
 
