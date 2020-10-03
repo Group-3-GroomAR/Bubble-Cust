@@ -24,6 +24,7 @@ class _PaymentState extends State<Payment> {
   List<Service> _serviceList; //abouve 3 variables are for get object
   String _note; //to get notes
   String _availableTime = "Loading..";
+  String _customerId = "cus2";
 
   _PaymentState(this._shop, this._dateTime, this._serviceList);
 
@@ -275,7 +276,7 @@ class _PaymentState extends State<Payment> {
     //print("Pass to th is $refId");
     var result = await httpPost("makereservation", {
       "shopId": _shop.shopID,
-      "customerId": "cus2",
+      "customerId": _customerId,
       "paymentId": refId,
       "day": _dateTime.day,
       "month": _dateTime.month,

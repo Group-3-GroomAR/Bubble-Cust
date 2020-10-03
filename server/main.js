@@ -56,6 +56,17 @@ app.get('/tom', function (req, res) {
 
 
 //get shop details from database for main
+app.get('/customerupcomingreservation',async(req,res,next)=>{
+  console.log(`Getting reservation data for customer ${req.body.customerId} `);
+  //const [rows]=await db.query("SELECT * FROM salon;");
+
+  res.send({status:"OK"});
+  next();
+}
+)
+
+
+//get shop details from database for main
 app.get('/shoplist',async(req,res,next)=>{
   console.log("getting shop details");
   const [rows]=await db.query("SELECT * FROM salon;");

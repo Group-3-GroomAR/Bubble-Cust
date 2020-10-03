@@ -2,14 +2,12 @@ import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/reservation.dart';
 import 'package:flutter/material.dart';
 
-class Upcoming extends StatefulWidget {
-  Upcoming({Key key}) : super(key: key);
-
+class UpcomingReservation extends StatefulWidget {
   @override
-  _UpcomingState createState() => _UpcomingState();
+  _UpcomingReservationState createState() => _UpcomingReservationState();
 }
 
-class _UpcomingState extends State<Upcoming> {
+class _UpcomingReservationState extends State<UpcomingReservation> {
   List<Reservation> reservationList =
       []; //this is to add all reservation details
   String customerId = "cus2";
