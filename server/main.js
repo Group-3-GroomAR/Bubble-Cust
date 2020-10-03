@@ -18,6 +18,7 @@ userRout.route('/test1').post(function (req,res){
 
 
 app.post('/tom', async(req, res, next)=>{
+
 //   console.log("inside the function");
 //   console.log(req.body);
 //   const name = req.body.name;
@@ -56,11 +57,17 @@ app.get('/tom', function (req, res) {
 
 
 //get shop details from database for main
-app.get('/customerupcomingreservation',async(req,res,next)=>{
-  console.log(`Getting reservation data for customer ${req.body.customerId} `);
-  //const [rows]=await db.query("SELECT * FROM salon;");
+app.get('/customerupcoming',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`Getting reservation data for customer ${obj.customerId} `);
 
-  res.send({status:"OK"});
+  var sql=`SELECT * FROM reservation WHERE customer_id='${obj.customerId}' AND status=0 ORDER BY date ASC`;
+
+  const [rows]=await db.query(sql);     //sending the request
+  var len=rows.length;
+  console.log(len)
+
+  res.json(rows);
   next();
 }
 )

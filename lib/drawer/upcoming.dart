@@ -1,5 +1,6 @@
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/reservation.dart';
+import 'package:bubbletest/pages/appoinment.dart';
 import 'package:flutter/material.dart';
 
 class Upcoming extends StatefulWidget {
@@ -10,24 +11,70 @@ class Upcoming extends StatefulWidget {
 }
 
 class _UpcomingState extends State<Upcoming> {
-  List<Reservation> reservationList =
-      []; //this is to add all reservation details
-  String customerId = "cus2";
+  List<Reservation> reservationList = []; //this is to add all reservation
+  String customerId;
 
   @override
   void initState() {
+    customerId = "cus2";
     getReservation();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Upcoming"),
+        ),
+        body: Container(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: reservationList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  // margin: EdgeInsets.all(10),
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      elevation: 6,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                        child: ListTile(
+                          leading: Icon(Icons.calendar_today),
+                          title: Text(
+                            "Date:${reservationList[index].date.substring(0, 10)}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Time:${reservationList[index].start_time}",
+                                  style: TextStyle(fontSize: 17)),
+                              Text(
+                                  "Duration:${reservationList[index].duration} min",
+                                  style: TextStyle(fontSize: 17))
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    new Appoinment(
+                                        this.reservationList[index])));
+                          },
+                        ),
+                      )));
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> getReservation() async {
-    var result = await httpGet('customerupcomingreservation', {
-      "customerId": customerId,
-    });
+    var result =
+        await httpGet('customerupcoming', {"customerId": customerId, "id": 10});
 
     if (result.ok) {
       print("upcoming reservation details recived to Main");
