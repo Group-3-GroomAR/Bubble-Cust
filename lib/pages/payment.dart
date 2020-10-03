@@ -162,8 +162,8 @@ class _PaymentState extends State<Payment> {
         onPressed: () {
           //print("Payment ${payhere()}");
           //payhere();
-          //makeReservation("TTTT");
-          getAvailableTime();
+          makeReservation("TTTT");
+          //getAvailableTime();
         },
         child: Wrap(
           children: [
@@ -273,8 +273,17 @@ class _PaymentState extends State<Payment> {
 
   Future<void> makeReservation(String refId) async {
     //print("Pass to th is $refId");
-    var result = await httpPost("tom", {
-      "name": "Tom",
+    var result = await httpPost("makereservation", {
+      "shopId": _shop.shopID,
+      "customerId": "cus2",
+      "paymentId": refId,
+      "day": _dateTime.day,
+      "month": _dateTime.month,
+      "year": _dateTime.year,
+      "startTime": _availableTime,
+      "duration": getDuration(),
+      "note": _note,
+      "total": getTotal()
     });
     print(result.data);
   }

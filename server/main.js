@@ -36,6 +36,19 @@ app.post('/tom', async(req, res, next)=>{
   next();
 });
 
+
+app.post('/makereservation', async(req, res, next)=>{
+    console.log(`Making Reservation for ${req.body.customerId} at ${req.body.shopId}`);
+    //console.log(req.body);
+
+    var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','11:00:00',0,'${req.body.note}')`;
+    const row=await db.query(sql);     //sending the request
+    console.log(row);
+  
+    res.send({status:"OK"});
+    next();
+  });
+
 app.get('/tom', function (req, res) {
   console.log(req)
   res.send({name:'this is domiyan barath domiyan'})
@@ -58,14 +71,14 @@ app.get('/availabletime',async(req,res,next)=>{
 
   console.log(`getting avalable time for ${obj.shopId} at ${obj.day}/${obj.month}/${obj.year}`);    
 
-  var sql=`SELECT start_time FROM reservation WHERE salon_id='${obj.shopId}' AND date='${obj.year}-${obj.month}-${obj.day}'`;
+  var sql=`SELECT end_time FROM reservation WHERE salon_id='${obj.shopId}' AND date='${obj.year}-${obj.month}-${obj.day}'`;
  // var sql=`SELECT end_time FROM reservation WHERE salon_id='ax3' AND date='2020-08-18'`;
   
   const [rows]=await db.query(sql);     //sending the request
 
   var len=rows.length;
   var availabletime;
-  
+
   //this is getting the time 
   if(len>0)   //if there is a time 
   {
@@ -83,7 +96,8 @@ app.get('/availabletime',async(req,res,next)=>{
           max=rows[i].end_time;
         }
       }
-      //console.log(max);
+      // console.log(max);
+      // console.log(rows[0])
       
     }
     availabletime=max;    //setting the max finising time as a available time
