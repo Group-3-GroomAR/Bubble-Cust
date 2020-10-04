@@ -73,8 +73,7 @@ class _UpcomingState extends State<Upcoming> {
   }
 
   Future<void> getReservation() async {
-    var result =
-        await httpGet('customerupcoming', {"customerId": customerId, "id": 10});
+    var result = await httpGet('customerupcoming', {"customerId": customerId});
 
     if (result.ok) {
       print("upcoming reservation details recived to Main");

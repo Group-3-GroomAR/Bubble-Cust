@@ -47,15 +47,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -233,37 +224,6 @@ class _MyHomePageState extends State<MyHomePage> {
               shopCardList.length != 0 ? shopCardList[0] : Text("No data"),
               shopCardList.length != 0 ? shopCardList[1] : Text("No data"),
               shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
-
-              // ListView.builder(
-              //     shrinkWrap: true,
-              //     itemCount: shopList.length,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return ShopCard(shopList[index].shopName,
-              //           shopList[index].shopAddress, shopList[index].district);
-              //     }),
-
-              // ShopCard("Dummy began", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon TTT", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIY", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYX", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
-              // ShopCard("Salon LIYO", "@No.224A, Highlevel Road, Nugegoda ",
-              //     "Beauty salon in Nugegoda "),
             ],
           ),
         ),
@@ -400,9 +360,6 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         //print(shopList.length.toString());
         createUI();
-        // print(shopList[0].shopName);
-        // print(shopList[1].shopName);
-        // print(shopList[2].shopName);
       });
     } else if (!result.ok) {
       // final snackBar = SnackBar(content: Text('Connection Error'));

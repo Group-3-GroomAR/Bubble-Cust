@@ -72,8 +72,23 @@ app.get('/customerupcoming',async(req,res,next)=>{
 }
 )
 
+//get shop details from database for main
+app.get('/customerhistory',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`Getting reservation data for customer ${obj.customerId} `);
 
-//
+  var sql=`SELECT * FROM reservation WHERE customer_id='${obj.customerId}' AND status=1 ORDER BY date ASC`;
+
+  const [rows]=await db.query(sql);     //sending the request
+  var len=rows.length;
+  console.log(len)
+
+  res.json(rows);
+  next();
+}
+)
+
+
 //get shop details fro a peticuler shop id
 app.get('/shop',async(req,res,next)=>{
   var obj=JSON.parse(req.query.data);    //obj has all the values
