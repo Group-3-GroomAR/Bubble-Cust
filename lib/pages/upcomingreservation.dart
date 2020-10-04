@@ -33,16 +33,16 @@ class _UpcomingReservationState extends State<UpcomingReservation> {
         reservationList.clear();
         var inRes = result.data as List<dynamic>;
         inRes.forEach((inRes) {
-          reservationList.add(Reservation(
-              inRes['id'],
-              inRes['date'],
-              inRes['duration'],
-              inRes['start_time'],
-              inRes['end_time'],
-              inRes['total'],
-              inRes['customer_id'],
-              inRes['payment_id'],
-              inRes['note']));
+          // reservationList.add(Reservation(
+          //     inRes['id'],
+          //     inRes['date'],
+          //     inRes['duration'],
+          //     inRes['start_time'],
+          //     inRes['end_time'],
+          //     inRes['total'],
+          //     inRes['customer_id'],
+          //     inRes['payment_id'],
+          //     inRes['note']));
           //print(in_shop['contact'].toString());
         });
         print(reservationList.length.toString());

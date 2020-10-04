@@ -11,8 +11,6 @@ class Reservation {
   String _payment_id;
   String _note;
 
-  String _salonName;
-
   int get resID => _resID;
 
   String get salon_id => _salon_id;
@@ -39,7 +37,8 @@ class Reservation {
       this._total,
       this.customer_id,
       this._payment_id,
-      this._note);
+      this._note,
+      this._salon_id);
 
   int get total => _total;
 

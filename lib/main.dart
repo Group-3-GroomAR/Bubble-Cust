@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _city = _cityList[0];
 
     //this is for test
-    getShop();
+    getShopList();
   }
 
   @override
@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             // Navigator.of(context).push(new MaterialPageRoute(
             //     builder: (BuildContext context) => new Test()));
-            getShop();
+            getShopList();
           },
           tooltip: 'Increment',
           child: Icon(Icons.bubble_chart),
@@ -380,7 +380,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //functions
 
   //this is to get shop details
-  Future<void> getShop() async {
+  Future<void> getShopList() async {
     var result = await httpGet('shoplist');
     if (result.ok) {
       print("shop details recived to Main");

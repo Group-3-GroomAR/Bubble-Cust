@@ -91,7 +91,8 @@ class _UpcomingState extends State<Upcoming> {
               inRes['total'],
               inRes['customer_id'],
               inRes['payment_id'],
-              inRes['note']));
+              inRes['note'],
+              inRes['salon_id']));
           //print(in_shop['contact'].toString());
         });
         print(reservationList.length.toString());

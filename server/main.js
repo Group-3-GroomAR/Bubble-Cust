@@ -73,6 +73,25 @@ app.get('/customerupcoming',async(req,res,next)=>{
 )
 
 
+//
+//get shop details fro a peticuler shop id
+app.get('/shop',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+
+  console.log(`getting shop details of shop id ${obj.shopId}`);
+
+  var sql=`SELECT * FROM salon WHERE salon_id='${obj.shopId}'`;
+
+  const row=await db.query(sql);     //sending the request
+
+
+  res.json(row);
+  next();
+}
+)
+
+
+
 //get shop details from database for main
 app.get('/shoplist',async(req,res,next)=>{
   console.log("getting shop details");
