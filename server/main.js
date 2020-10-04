@@ -179,13 +179,10 @@ app.get('/availabletime',async(req,res,next)=>{
 )
 
 
-
-
-
-
+//getting service list of the saloon
 app.get('/servicelist',async(req,res,next)=>{
    var obj=JSON.parse(req.query.data);    //obj has all the values
-   console.log(`getting shoplist for shop'${obj.shopId}'`);  
+   console.log(`getting servicelist for shop'${obj.shopId}'`);  
   var sql=`SELECT * FROM service WHERE salon_id='${obj.shopId}'`;
   
   const [rows]=await db.query(sql);
@@ -194,6 +191,21 @@ app.get('/servicelist',async(req,res,next)=>{
   next();
 }
 )
+
+//getting open time of the saloon
+app.get('/opentime',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`getting open time of shop'${obj.shopId}'`);  
+
+ var sql=`SELECT * FROM time WHERE salon_id='${obj.shopId}'`;
+ 
+ const [rows]=await db.query(sql);
+
+ res.json(rows);
+ next();
+}
+)
+
 
 
 // app.get('/getuser', async (req, res, next) => {

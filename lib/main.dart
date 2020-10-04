@@ -60,17 +60,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _index = 0;
   int _value = 0; //this is value of city list
-  List<String> _cityList = new List(5);
+  List<String> _cityList = new List(25);
   String _city;
 
   @override
   void initState() {
     super.initState();
-    _cityList[0] = "Colombo";
-    _cityList[1] = "Nuwara Eliya";
-    _cityList[2] = "Kandy";
-    _cityList[3] = "Gampaha";
-    _cityList[4] = "Matara";
+    _cityList[0] = "Ampara";
+    _cityList[1] = "Anuradhapura";
+    _cityList[2] = "Badulla";
+    _cityList[3] = "Batticaloa";
+    _cityList[4] = "Colombo";
+    _cityList[5] = "Galle";
+    _cityList[6] = "Gampaha";
+    _cityList[7] = "Hambantota";
+    _cityList[8] = "Jaffna";
+    _cityList[9] = "Kalutara";
+    _cityList[10] = "Kandy";
+    _cityList[11] = "Kegalle";
+    _cityList[12] = "Kilinochchi";
+    _cityList[13] = "Kurunegala";
+    _cityList[14] = "Mannar";
+    _cityList[15] = "Matale";
+    _cityList[16] = "Matara";
+    _cityList[17] = "Monaragala";
+    _cityList[18] = "Mullaitivu";
+    _cityList[19] = "Nuwara Eliya";
+    _cityList[20] = "Polonnaruwa";
+    _cityList[21] = "Puttalam";
+    _cityList[22] = "Ratnapura";
+    _cityList[23] = "Trincomalee";
+    _cityList[24] = "Vavuniya";
     _city = _cityList[0];
 
     //this is for test
@@ -87,11 +107,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          // title: Text("Bubble",
-          //   style: TextStyle(fontStyle: FontStyle.italic),
-          // ),
           elevation: 0,
           actions: [
             IconButton(
@@ -103,42 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
                 icon: Icon(Icons.location_on),
                 onPressed: () {
-                  showModalBottomSheet<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Wrap(
-                              children: List<Widget>.generate(
-                                5,
-                                (int index) {
-                                  String _temp = _cityList.elementAt(index);
-                                  return Container(
-                                      margin:
-                                          EdgeInsets.only(left: 3, right: 3),
-                                      child: ChoiceChip(
-                                        elevation: 5,
-                                        padding: EdgeInsets.all(5),
-                                        label: Text(
-                                          '$_temp',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        selected: _value == index,
-                                        onSelected: (bool selected) {
-                                          setState(() {
-                                            _value = selected ? index : null;
-                                            _city = _cityList[_value];
-                                            Navigator.pop(context);
-                                          });
-                                        },
-                                      ));
-                                },
-                              ).toList(),
-                            ),
-                          ),
-                        );
-                      });
+                  selectCity();
                 }),
             IconButton(
                 icon: Icon(Icons.notifications),
@@ -150,83 +130,103 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         body: Container(
-          child: ListView(
-            //padding: const EdgeInsets.all(5.0),
-            children: [
-              Container(
-                color: Colors.purple,
-                padding: EdgeInsets.only(left: 5),
-                child: Text(
-                  "Recent Visits",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              Container(
-                padding: EdgeInsets.only(bottom: 15, left: 5, right: 5),
-                //margin: EdgeInsets.all(5),
-                //color: Colors.purple,
-                height: 250,
-                decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20)),
-                    border: Border.all(width: 1, color: Colors.purple)),
-                child: ListView.builder(
-                    itemCount: 10,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return SpecialistTile(
-                        speciality: "Hair",
-                        noOfDoctors: index,
-                        backColor: Colors.white,
-                      );
-                    }),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-              ),
-
-              Container(
-                  padding: EdgeInsets.only(left: 5),
-                  child: Wrap(
-                    children: [
-                      Text(
-                        "All Sallon(",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Icon(
-                        Icons.location_on,
-                        size: 18,
-                      ),
-                      Text(
-                        "$_city)",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )),
-
-              Padding(padding: EdgeInsets.only(top: 5)), //this is padding
-
-              shopCardList.length != 0 ? shopCardList[0] : Text("No data"),
-              shopCardList.length != 0 ? shopCardList[1] : Text("No data"),
-              shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
-            ],
-          ),
+          child: ListView.builder(
+              padding: const EdgeInsets.all(5),
+              itemCount: shopCardList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return shopCardList[index];
+              }),
         ),
+        // body: Container(
+        //   child: ListView(
+        //     physics: NeverScrollableScrollPhysics(),
+        //     //padding: const EdgeInsets.all(5.0),
+        //     children: [
+        //       Container(
+        //         color: Colors.purple,
+        //         padding: EdgeInsets.only(left: 5),
+        //         child: Text(
+        //           "Recent Visits",
+        //           style: TextStyle(
+        //             fontSize: 18,
+        //             color: Colors.white,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //       ),
+
+        //       Container(
+        //         padding: EdgeInsets.only(bottom: 15, left: 5, right: 5),
+        //         //margin: EdgeInsets.all(5),
+        //         //color: Colors.purple,
+        //         height: 250,
+        //         decoration: BoxDecoration(
+        //             color: Colors.purple,
+        //             borderRadius: BorderRadius.only(
+        //                 bottomRight: Radius.circular(20),
+        //                 bottomLeft: Radius.circular(20)),
+        //             border: Border.all(width: 1, color: Colors.purple)),
+        //         child: ListView.builder(
+        //             itemCount: 10,
+        //             shrinkWrap: true,
+        //             scrollDirection: Axis.horizontal,
+        //             itemBuilder: (context, index) {
+        //               return SpecialistTile(
+        //                 speciality: "Hair",
+        //                 noOfDoctors: index,
+        //                 backColor: Colors.white,
+        //               );
+        //             }),
+        //       ),
+
+        //       Padding(
+        //         padding: EdgeInsets.only(top: 10),
+        //       ),
+
+        //       Container(
+        //           padding: EdgeInsets.only(left: 5),
+        //           child: Wrap(
+        //             children: [
+        //               Text(
+        //                 "All Sallon(",
+        //                 style: TextStyle(
+        //                   fontSize: 18,
+        //                   fontWeight: FontWeight.bold,
+        //                 ),
+        //               ),
+        //               Icon(
+        //                 Icons.location_on,
+        //                 size: 18,
+        //               ),
+        //               Text(
+        //                 "$_city)",
+        //                 style: TextStyle(
+        //                   fontSize: 18,
+        //                   fontWeight: FontWeight.bold,
+        //                 ),
+        //               ),
+        //             ],
+        //           )),
+
+        //       Padding(padding: EdgeInsets.only(top: 5)), //this is padding
+
+        //       Container(
+        //           // height: 200, // give it a fixed height constraint
+        //           color: Colors.teal,
+        //           // child ListView
+        //           child: ListView.builder(
+        //               padding: const EdgeInsets.all(8),
+        //               itemCount: shopCardList.length,
+        //               itemBuilder: (BuildContext context, int index) {
+        //                 return shopCardList[index];
+        //               })),
+
+        //       shopCardList.length != 0 ? shopCardList[0] : Text("No data"),
+        //       shopCardList.length != 0 ? shopCardList[1] : Text("No data"),
+        //       shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
+        //     ],
+        //   ),
+        // ),
         floatingActionButton: FloatingActionButton(
           isExtended: true,
           onPressed: () {
@@ -376,5 +376,44 @@ class _MyHomePageState extends State<MyHomePage> {
     for (i = 0; i < shopList.length; i++) {
       shopCardList.add(ShopCard(shopList[i]));
     }
+  }
+
+  void selectCity() {
+    showModalBottomSheet<void>(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Wrap(
+                children: List<Widget>.generate(
+                  25,
+                  (int index) {
+                    String _temp = _cityList.elementAt(index);
+                    return Container(
+                        margin: EdgeInsets.only(left: 3, right: 3),
+                        child: ChoiceChip(
+                          elevation: 5,
+                          padding: EdgeInsets.all(5),
+                          label: Text(
+                            '$_temp',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          selected: _value == index,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              _value = selected ? index : null;
+                              _city = _cityList[_value];
+                              Navigator.pop(context);
+                            });
+                          },
+                        ));
+                  },
+                ).toList(),
+              ),
+            ),
+          );
+        });
   }
 }
