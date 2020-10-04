@@ -1,4 +1,6 @@
+import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/shop.dart';
+import 'package:bubbletest/extra/time.dart';
 import 'package:bubbletest/pages/weeklisttile.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,11 +19,13 @@ class _ShopDetailState extends State<ShopDetail> {
   List<DateTime> dateList = new List(7); //to add DateTime object
   _ShopDetailState(this._shop);
   Future<void> _launched;
+  List<Widget> _widgetList;
 
   @override
   void initState() {
     _tel = _shop.contact.toString();
     dateList = createDateTimeList();
+    getAvailableTime();
     // TODO: implement initState
     super.initState();
   }
@@ -30,7 +34,14 @@ class _ShopDetailState extends State<ShopDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${_shop.shopName}"),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          "${_shop.shopName}",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -83,14 +94,19 @@ class _ShopDetailState extends State<ShopDetail> {
               title: Text(_shop.district),
             ),
 
-            ExpansionTile(
-              maintainState: true,
-              title: Text(
-                "Available Dates",
-                style: TextStyle(color: Colors.black, fontSize: 20),
-              ),
-              children: createTitle(dateList),
-            )
+            _widgetList != null
+                ? ExpansionTile(
+                    maintainState: true,
+                    title: Text(
+                      "Available Dates",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    children: _widgetList,
+                  )
+                : Text(
+                    "Available Dates Not Available",
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  ),
           ],
         ),
       ),
@@ -121,15 +137,29 @@ class _ShopDetailState extends State<ShopDetail> {
     return dateList;
   }
 
-  List<Widget> createTitle(List<DateTime> date) {
+  //this is useto create ui
+  List<Widget> createTitle(List<DateTime> date, List<Time> time) {
+    print("Length of time${time.length}");
     List<WeekListTile> tile = List(7);
     int i;
 
     for (i = 0; i < date.length; i++) {
-      tile[i] = WeekListTile(date[i], _shop);
-      print("Done");
+      tile[i] = WeekListTile(date[i], _shop, findTime(date[i].weekday, time));
+      //print("Done");
     }
     return tile;
+  }
+
+  //this is to find the correct time object for a til
+  Time findTime(int i, List<Time> time) {
+    Time obj;
+    int j;
+    for (j = 0; j < time.length; j++) {
+      if (time[j].day == i) {
+        obj = time[j];
+      }
+    }
+    return obj;
   }
 
   Future<void> _makePhoneCall(String url) async {
@@ -137,6 +167,37 @@ class _ShopDetailState extends State<ShopDetail> {
       await launch(url);
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> getAvailableTime() async {
+    List<Time> timeList = []; //list to add shop objects
+    var result = await httpGet('opentime', {"shopId": _shop.shopID});
+    if (result.ok) {
+      print("Open time details recived to Main");
+      setState(() {
+        timeList.clear();
+        var inShop = result.data as List<dynamic>;
+        inShop.forEach((inShop) {
+          timeList.add(Time(
+            inShop['salon_id'],
+            inShop['day'],
+            inShop['open_time'],
+            inShop['close_time'],
+            inShop['is_open'],
+          ));
+          //print(inShop['is_open'].toString());
+        });
+        //print("Length${timeList.length.toString()}");
+        //createUI();
+        _widgetList = createTitle(dateList, timeList);
+      });
+    } else if (!result.ok) {
+      // final snackBar = SnackBar(content: Text('Connection Error'));
+      // Scaffold.of(context).showSnackBar(snackBar);
+      timeList.clear();
+      setState(() {});
+      print("Unable to get data to Main");
     }
   }
 }

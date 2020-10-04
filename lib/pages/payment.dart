@@ -273,7 +273,15 @@ class _PaymentState extends State<Payment> {
   }
 
   Future<void> makeReservation(String refId) async {
-    //print("Pass to th is $refId");
+    _serviceList[0].serviceID;
+    List<int> list = []; //this list is to pass the service id
+    int i;
+
+    for (i = 0; i < _serviceList.length; i++) {
+      list.add(_serviceList[i].serviceID);
+    }
+
+    print("Pass to th is $list");
     var result = await httpPost("makereservation", {
       "shopId": _shop.shopID,
       "customerId": _customerId,
@@ -284,7 +292,8 @@ class _PaymentState extends State<Payment> {
       "startTime": _availableTime,
       "duration": getDuration(),
       "note": _note,
-      "total": getTotal()
+      "total": getTotal(),
+      "service": list
     });
     print(result.data);
   }
