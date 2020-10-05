@@ -39,8 +39,14 @@ Future<RequestResult> httpPost(String route, [dynamic data]) async {
 //  print(test);
   print(dataStr);
 
-  var result = await http
-      .post(url, body: dataStr, headers: {"Content-Type": "application/json"});
-
-  return RequestResult(true, jsonDecode(result.body));
+  try {
+    var result = await http.post(url,
+        body: dataStr, headers: {"Content-Type": "application/json"});
+    print("data has been send to server");
+    return RequestResult(true, jsonDecode(result.body));
+  } catch (e) {
+    print("Got an server error");
+    print(e.toString());
+    return RequestResult(false, "Connection error");
+  }
 }

@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/home': (context) => MyHomePage(),
+      },
     );
   }
 }
@@ -128,13 +131,46 @@ class _MyHomePageState extends State<MyHomePage> {
                 })
           ],
         ),
-        body: Container(
-          child: ListView.builder(
-              padding: const EdgeInsets.all(5),
-              itemCount: shopCardList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return shopCardList[index];
-              }),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                padding: EdgeInsets.only(left: 5),
+                child: Wrap(
+                  children: [
+                    Text(
+                      "All Sallon(",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Icon(
+                      Icons.location_on,
+                      size: 18,
+                    ),
+                    Text(
+                      "$_city)",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )),
+
+            Padding(padding: EdgeInsets.only(top: 5)), //this is padding
+            Expanded(
+              child: Container(
+                child: ListView.builder(
+                    padding: const EdgeInsets.all(5),
+                    itemCount: shopCardList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return shopCardList[index];
+                    }),
+              ),
+            )
+          ],
         ),
         // body: Container(
         //   child: ListView(

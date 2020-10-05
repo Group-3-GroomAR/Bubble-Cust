@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/service.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 
 class Payment extends StatefulWidget {
@@ -161,10 +161,8 @@ class _PaymentState extends State<Payment> {
             const EdgeInsets.only(top: 12, bottom: 12, left: 30, right: 30),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         onPressed: () {
-          //print("Payment ${payhere()}");
           //payhere();
           makeReservation("TTTT");
-          //getAvailableTime();
         },
         child: Wrap(
           children: [
@@ -273,6 +271,11 @@ class _PaymentState extends State<Payment> {
   }
 
   Future<void> makeReservation(String refId) async {
+    // Navigator.pushNamed(context, '/home');
+    Navigator.pop(context);
+    Navigator.pop(context);
+    Navigator.pop(context);
+
     _serviceList[0].serviceID;
     List<int> list = []; //this list is to pass the service id
     int i;
@@ -296,6 +299,29 @@ class _PaymentState extends State<Payment> {
       "service": list
     });
     print(result.data);
+    if (result.ok) {
+      // Fluttertoast.showToast(
+      //     msg: "Reservation completed",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0);
+
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Navigator.pop(context);
+    } else if (!result.ok) {
+      Fluttertoast.showToast(
+          msg: "Reservation not completed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   //get available time to make reservation
