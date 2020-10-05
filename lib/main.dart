@@ -1,3 +1,4 @@
+import 'package:bubbletest/drawer/contactus.dart';
 import 'package:bubbletest/drawer/history.dart';
 import 'package:bubbletest/drawer/notification.dart';
 import 'package:bubbletest/drawer/profile.dart';
@@ -93,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _cityList[22] = "Ratnapura";
     _cityList[23] = "Trincomalee";
     _cityList[24] = "Vavuniya";
-    _city = _cityList[0];
+    _city = _cityList[4];
 
     //this is for test
     getShopList();
@@ -135,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.all(5),
                 child: Wrap(
                   children: [
                     Text(
@@ -158,18 +159,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 )),
-
-            Padding(padding: EdgeInsets.only(top: 5)), //this is padding
-            Expanded(
-              child: Container(
-                child: ListView.builder(
-                    padding: const EdgeInsets.all(5),
-                    itemCount: shopCardList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return shopCardList[index];
-                    }),
-              ),
-            )
+            shopCardList.length != 0
+                ? Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                          padding: const EdgeInsets.all(5),
+                          itemCount: shopCardList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return shopCardList[index];
+                          }),
+                    ),
+                  )
+                : Center(
+                    child: Wrap(
+                    children: [Center(child: Text("No data available"))],
+                  ))
           ],
         ),
         // body: Container(
@@ -344,10 +348,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.contacts),
-                title: Text('Contact us',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
+                  leading: Icon(Icons.contacts),
+                  title: Text('Contact us',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  onTap: () {
+                    // Navigator.of(context).push(new MaterialPageRoute(
+                    //     builder: (BuildContext context) => new ContactUs()));
+                  }),
               Divider(
                 thickness: 2,
               ),
