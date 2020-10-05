@@ -352,8 +352,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text('Contact us',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   onTap: () {
-                    // Navigator.of(context).push(new MaterialPageRoute(
-                    //     builder: (BuildContext context) => new ContactUs()));
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (BuildContext context) => new ContactUs()));
                   }),
               Divider(
                 thickness: 2,

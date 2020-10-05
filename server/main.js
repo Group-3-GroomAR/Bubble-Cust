@@ -79,6 +79,23 @@ app.get('/customerupcoming',async(req,res,next)=>{
 }
 )
 
+
+//get profile of the person
+app.get('/customerdetail',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`Getting profile data for customer ${obj.customerId} `);
+
+  var sql=`SELECT * FROM customer WHERE customer_id='${obj.customerId}'`;
+
+  const row=await db.query(sql);     //sending the request
+
+
+  res.json(row);
+  // res.send({status:"OK"});
+  next();
+}
+)
+
 //get shop details from database for main
 app.get('/customerhistory',async(req,res,next)=>{
   var obj=JSON.parse(req.query.data);    //obj has all the values
