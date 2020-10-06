@@ -1,11 +1,15 @@
+import 'dart:ui';
+
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/extra/reservation.dart';
 import 'package:flutter/material.dart';
+
 class History extends StatefulWidget {
   History({Key key}) : super(key: key);
   @override
   _HistoryState createState() => _HistoryState();
 }
+
 class _HistoryState extends State<History> {
   List<Reservation> reservationList = []; //this is to add all reservation
   String customerId;
@@ -14,6 +18,7 @@ class _HistoryState extends State<History> {
     customerId = "cus2";
     getReservation();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +31,7 @@ class _HistoryState extends State<History> {
           itemCount: reservationList.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              // margin: EdgeInsets.all(10),
+                // margin: EdgeInsets.all(10),
                 child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
@@ -34,7 +39,7 @@ class _HistoryState extends State<History> {
                     child: Container(
                       margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
                       child: ListTile(
-                        leading: Icon(Icons.calendar_today),
+                        leading: Icon(Icons.history_edu),
                         title: Text(
                           "Date:${reservationList[index].date.substring(0, 10)}",
                           style: TextStyle(
@@ -50,6 +55,10 @@ class _HistoryState extends State<History> {
                                 style: TextStyle(fontSize: 17))
                           ],
                         ),
+                        trailing: Text(
+                          "Rs.${reservationList[index].total}",
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ),
                     )));
           },
@@ -57,6 +66,7 @@ class _HistoryState extends State<History> {
       ),
     );
   }
+
   Future<void> getReservation() async {
     var result = await httpGet('customerhistory', {"customerId": customerId});
     if (result.ok) {

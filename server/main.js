@@ -42,11 +42,7 @@ app.post('/makereservation', async(req, res, next)=>{
     console.log(`Making Reservation for ${req.body.customerId} at ${req.body.shopId}`);
     var service=req.body.service;
 
-    var i;
-    for(i=0;i<service.length;i++)
-    {
-      console.log(service[i])
-    }
+    
     var startTime=req.body.startTime;
     var hour=parseInt(startTime.substring(0,2));
     var min=parseInt(startTime.substring(3,5));
@@ -69,8 +65,20 @@ app.post('/makereservation', async(req, res, next)=>{
 
     var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','${endhour}:${endmin}:00',0,'${req.body.note}')`;
     const row=await db.query(sql);     //sending the request
-    //console.log(row);
-  
+
+    var sqltemp=`SELECT LAST_INSERT_ID()`;
+    var [last]=await db.query(sqltemp);
+    var las=last[0]['LAST_INSERT_ID()'];    //this is the last service id
+    console.log(`Last Reservation ${las}`);
+
+    var i;
+    for(i=0;i<service.length;i++)
+    {
+      var sqlser=`INSERT INTO ref_reservation(id,service_id) VALUES('${las}','${service[i]}')`;
+      var [sqlserx]=await db.query(sqlser);
+
+      console.log(`Service Added ${service[i]}`)
+    }
     res.send({status:"OK"});
     next();
   });
@@ -265,6 +273,7 @@ app.get('/availabletime',async(req,res,next)=>{
 
   var sqlm=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
   const [rowm]=await db.query(sqlm);     //sending the request
+  //console.log(`TOM${rowm[0].open_time}`)
   morning=rowm[0].open_time;
 
   var sqle=`SELECT break_end,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;

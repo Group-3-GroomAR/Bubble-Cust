@@ -4,11 +4,13 @@ import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'moredetails.dart';
+
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key key}) : super(key: key);
   @override
   _NotificationState createState() => _NotificationState();
 }
+
 class _NotificationState extends State<NotificationPage> {
   List<Reservation> reservationList = []; //this is to add all reservation
   String customerId;
@@ -17,6 +19,7 @@ class _NotificationState extends State<NotificationPage> {
     customerId = "cus2";
     getNotification();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +32,7 @@ class _NotificationState extends State<NotificationPage> {
           itemCount: reservationList.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              // margin: EdgeInsets.all(10),
+                // margin: EdgeInsets.all(10),
                 child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
@@ -37,7 +40,7 @@ class _NotificationState extends State<NotificationPage> {
                     child: Container(
                       margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
                       child: ListTile(
-                        leading: Icon(Icons.calendar_today),
+                        leading: Icon(Icons.today),
                         title: Text(
                           reservationList[index].status == 0
                               ? "Status:Upcoming"
@@ -74,6 +77,7 @@ class _NotificationState extends State<NotificationPage> {
           child: Icon(Icons.network_wifi)),*/
     );
   }
+
   Future<void> getNotification() async {
     var result = await httpGet('customernotification', {
       "customerId": customerId,
