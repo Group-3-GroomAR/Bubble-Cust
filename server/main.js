@@ -61,7 +61,7 @@ app.post('/makereservation', async(req, res, next)=>{
       //console.log(`This is getting bro${temp}`)
       endmin=endmin-60;
     }
-    console.log(`hour${endhour} min${endmin}`);
+    console.log(`hour${endhour} min${endmin} day${req.body.day}`);
 
     var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','${endhour}:${endmin}:00',0,'${req.body.note}')`;
     const row=await db.query(sql);     //sending the request
@@ -128,6 +128,22 @@ app.get('/customerhistory',async(req,res,next)=>{
   console.log(`Getting reservation data for customer ${obj.customerId} `);
 
   var sql=`SELECT * FROM reservation WHERE customer_id='${obj.customerId}' AND status=1 ORDER BY date ASC`;
+
+  const [rows]=await db.query(sql);     //sending the request
+  var len=rows.length;
+  console.log(len)
+
+  res.json(rows);
+  next();
+}
+)
+
+//this is getting service for reservation
+app.get('/servicereservation',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`Getting service for reservation data for customer ${obj.resId} `);
+
+  var sql=`SELECT service.service_name FROM service INNER JOIN ref_reservation ON ref_reservation.service_id=service.service_id WHERE ref_reservation.id=${obj.resId}`;
 
   const [rows]=await db.query(sql);     //sending the request
   var len=rows.length;

@@ -18,6 +18,7 @@ class _AppoinmentState extends State<Appoinment> {
   Reservation _reservation;
   Shop _shop; //getting though request
   Future<void> _launched;
+  List<String> _service = [];
   _AppoinmentState(this._reservation);
 
   @override
@@ -125,8 +126,26 @@ class _AppoinmentState extends State<Appoinment> {
         inShopx[0]['email'],
         inShopx[0]['about']);
 
-    print(inShopx[0]['salon_id']);
+    if (result.ok) {
+      getService();
+    }
+
+    //print(inShopx[0]['salon_id']);
     // print(_reservation.salon_id);
+  }
+
+  Future<void> getService() async {
+    var result = await httpGet('servicereservation', {
+      "resId": _reservation.resID,
+    });
+
+    var inShop = result.data as List<dynamic>;
+    _service.clear();
+    inShop.forEach((element) {
+      _service.add(element['service_name']);
+    });
+
+    print(_service.toString());
   }
 
   String makeEncript(int x) {
@@ -192,6 +211,12 @@ class _AppoinmentState extends State<Appoinment> {
                     ListTile(
                       leading: Icon(Icons.timer),
                       title: Text("${_reservation.duration} min"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.medical_services),
+                      title: Text(_service
+                          .toString()
+                          .substring(1, _service.toString().length - 1)),
                     ),
                   ],
                 ),
