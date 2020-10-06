@@ -1,12 +1,15 @@
 import 'package:bubbletest/backend/http.dart';
+import 'package:bubbletest/drawer/profileedit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nice_button/nice_button.dart';
+
 class Profile extends StatefulWidget {
   Profile({Key key}) : super(key: key);
   @override
   _ProfileState createState() => _ProfileState();
 }
+
 class _ProfileState extends State<Profile> {
   var firstColor = Colors.deepPurple, secondColor = Colors.purple;
   String _name = "Name";
@@ -19,6 +22,7 @@ class _ProfileState extends State<Profile> {
     // TODO: implement initState
     getCustomer();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +50,7 @@ class _ProfileState extends State<Profile> {
                   // ),
                   Container(
                     child: Icon(
-                      Icons.person,
+                      Icons.account_box,
                       size: 200,
                       color: Colors.deepPurple,
                     ),
@@ -157,10 +161,14 @@ class _ProfileState extends State<Profile> {
         text: "Edit",
         icon: Icons.edit,
         gradientColors: [secondColor, firstColor],
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) => new ProfileEdit()));
+        },
       ),
     );
   }
+
   //this function is to get the profile details
   Future<void> getCustomer() async {
     var result = await httpGet('customerdetail', {
@@ -178,15 +186,5 @@ class _ProfileState extends State<Profile> {
     } else {
       print("Unable to get data");
     }
-    // _shop = Shop.contact(
-    //     inShopx[0]['salon_id'],
-    //     inShopx[0]['shop_name'],
-    //     inShopx[0]['salon_address'],
-    //     inShopx[0]['district'],
-    //     inShopx[0]['contact'],
-    //     inShopx[0]['email'],
-    //     inShopx[0]['about']);
-    //print(inShopx[0]['salon_id']);
-    // print(_reservation.salon_id);
   }
 }

@@ -133,8 +133,12 @@ app.get('/shop',async(req,res,next)=>{
 
 //get shop details from database for main
 app.get('/shoplist',async(req,res,next)=>{
-  console.log("getting shop details");
-  const [rows]=await db.query("SELECT * FROM salon;");
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+
+  console.log(`getting shop details from ${obj.dist}`);
+  
+  var sql=`SELECT * FROM salon WHERE district='${obj.dist}'`;
+  const [rows]=await db.query(sql);
 
   res.json(rows);
   next();

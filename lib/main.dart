@@ -3,7 +3,6 @@ import 'package:bubbletest/drawer/history.dart';
 import 'package:bubbletest/drawer/notification.dart';
 import 'package:bubbletest/drawer/profile.dart';
 import 'package:bubbletest/drawer/upcoming.dart';
-import 'package:bubbletest/test/testsearchdelegate.dart';
 import 'package:bubbletest/pages/shopcard.dart';
 import 'package:flutter/material.dart';
 import 'backend/http.dart';
@@ -65,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _value = 0; //this is value of city list
   List<String> _cityList = new List(25);
   String _city;
+  bool _search = false;
 
   @override
   void initState() {
@@ -115,12 +115,17 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                showSearch(context: context, delegate: TestSearchDelegate());
+                //showSearch(context: context, delegate: TestSearchDelegate());
+                setState(() {
+                  _search = !_search;
+                });
               },
             ),
             IconButton(
                 icon: Icon(Icons.location_on),
                 onPressed: () {
+                  _search = false;
+
                   selectCity();
                 }),
             IconButton(
@@ -135,30 +140,39 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                padding: EdgeInsets.all(5),
-                child: Wrap(
-                  children: [
-                    Text(
-                      "All Sallon(",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(
-                      Icons.location_on,
-                      size: 18,
-                    ),
-                    Text(
-                      "$_city)",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                )),
+            _search == true
+                ? Container(
+                    padding: EdgeInsets.all(5),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          hintText: 'Enter Shop Name'),
+                      onChanged: (value) {
+                        print(value);
+                        setState(() {
+                          createUIx(value);
+                        });
+                      },
+                    ))
+                : Container(
+                    padding: EdgeInsets.all(5),
+                    child: Wrap(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 18,
+                        ),
+                        Text(
+                          "$_city",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )),
             shopCardList.length != 0
                 ? Expanded(
                     child: Container(
@@ -176,96 +190,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ))
           ],
         ),
-        // body: Container(
-        //   child: ListView(
-        //     physics: NeverScrollableScrollPhysics(),
-        //     //padding: const EdgeInsets.all(5.0),
-        //     children: [
-        //       Container(
-        //         color: Colors.purple,
-        //         padding: EdgeInsets.only(left: 5),
-        //         child: Text(
-        //           "Recent Visits",
-        //           style: TextStyle(
-        //             fontSize: 18,
-        //             color: Colors.white,
-        //             fontWeight: FontWeight.bold,
-        //           ),
-        //         ),
-        //       ),
-
-        //       Container(
-        //         padding: EdgeInsets.only(bottom: 15, left: 5, right: 5),
-        //         //margin: EdgeInsets.all(5),
-        //         //color: Colors.purple,
-        //         height: 250,
-        //         decoration: BoxDecoration(
-        //             color: Colors.purple,
-        //             borderRadius: BorderRadius.only(
-        //                 bottomRight: Radius.circular(20),
-        //                 bottomLeft: Radius.circular(20)),
-        //             border: Border.all(width: 1, color: Colors.purple)),
-        //         child: ListView.builder(
-        //             itemCount: 10,
-        //             shrinkWrap: true,
-        //             scrollDirection: Axis.horizontal,
-        //             itemBuilder: (context, index) {
-        //               return SpecialistTile(
-        //                 speciality: "Hair",
-        //                 noOfDoctors: index,
-        //                 backColor: Colors.white,
-        //               );
-        //             }),
-        //       ),
-
-        //       Padding(
-        //         padding: EdgeInsets.only(top: 10),
-        //       ),
-
-        //       Container(
-        //           padding: EdgeInsets.only(left: 5),
-        //           child: Wrap(
-        //             children: [
-        //               Text(
-        //                 "All Sallon(",
-        //                 style: TextStyle(
-        //                   fontSize: 18,
-        //                   fontWeight: FontWeight.bold,
-        //                 ),
-        //               ),
-        //               Icon(
-        //                 Icons.location_on,
-        //                 size: 18,
-        //               ),
-        //               Text(
-        //                 "$_city)",
-        //                 style: TextStyle(
-        //                   fontSize: 18,
-        //                   fontWeight: FontWeight.bold,
-        //                 ),
-        //               ),
-        //             ],
-        //           )),
-
-        //       Padding(padding: EdgeInsets.only(top: 5)), //this is padding
-
-        //       Container(
-        //           // height: 200, // give it a fixed height constraint
-        //           color: Colors.teal,
-        //           // child ListView
-        //           child: ListView.builder(
-        //               padding: const EdgeInsets.all(8),
-        //               itemCount: shopCardList.length,
-        //               itemBuilder: (BuildContext context, int index) {
-        //                 return shopCardList[index];
-        //               })),
-
-        //       shopCardList.length != 0 ? shopCardList[0] : Text("No data"),
-        //       shopCardList.length != 0 ? shopCardList[1] : Text("No data"),
-        //       shopCardList.length != 0 ? shopCardList[2] : Text("No data"),
-        //     ],
-        //   ),
-        // ),
         floatingActionButton: FloatingActionButton(
           isExtended: true,
           onPressed: () {
@@ -383,7 +307,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //this is to get shop details
   Future<void> getShopList() async {
-    var result = await httpGet('shoplist');
+    var result = await httpGet('shoplist', {
+      "dist": _city,
+    });
     if (result.ok) {
       print("shop details recived to Main");
       setState(() {
@@ -398,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
               inShop['contact'],
               inShop['email'],
               inShop['about']));
-          //print(in_shop['contact'].toString());
+          print(inShop['shop_name'].toString());
         });
         //print(shopList.length.toString());
         createUI();
@@ -412,11 +338,25 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  //adding shop object to ui part
+  //adding shop object to ui part  with
   createUI() {
+    shopCardList.clear();
     int i;
     for (i = 0; i < shopList.length; i++) {
       shopCardList.add(ShopCard(shopList[i]));
+    }
+  }
+
+  createUIx(String val) {
+    shopCardList.clear();
+    int i;
+    //print(val.length);
+
+    for (i = 0; i < shopList.length; i++) {
+      //print(shopList[i].shopName.substring(0, val.length));
+      if (shopList[i].shopName.substring(0, val.length) == val) {
+        shopCardList.add(ShopCard(shopList[i]));
+      }
     }
   }
 
@@ -447,6 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             setState(() {
                               _value = selected ? index : null;
                               _city = _cityList[_value];
+                              getShopList();
                               Navigator.pop(context);
                             });
                           },
