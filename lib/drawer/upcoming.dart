@@ -43,13 +43,16 @@ class _UpcomingState extends State<Upcoming> {
                         child: ListTile(
                           leading: Icon(Icons.calendar_today),
                           title: Text(
-                            "Date:${reservationList[index].date.substring(0, 10)}",
+                            "Ref No:${makeEncript(reservationList[index].resID)}",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                  "Date:${reservationList[index].date.substring(0, 10)}",
+                                  style: TextStyle(fontSize: 17)),
                               Text("Time:${reservationList[index].start_time}",
                                   style: TextStyle(fontSize: 17)),
                               Text(
@@ -106,5 +109,13 @@ class _UpcomingState extends State<Upcoming> {
     }
 
     print(result.data);
+  }
+
+  String makeEncript(int x) {
+    print(x);
+    int val = 99 * x;
+    val = val + 60;
+    print(val);
+    return val.toString();
   }
 }

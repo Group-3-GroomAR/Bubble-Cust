@@ -59,9 +59,11 @@ app.post('/makereservation', async(req, res, next)=>{
     var endmin=min+tempmin;
     if(endmin>59)
     {
+      console.log("This is getting bro")
       endhour=endhour+1;
-      var temp=endmin-60;
-      endmin=endmin-temp;
+      //var temp=60-endmin;
+      //console.log(`This is getting bro${temp}`)
+      endmin=endmin-60;
     }
     console.log(`hour${endhour} min${endmin}`);
 
@@ -128,6 +130,22 @@ app.get('/customerhistory',async(req,res,next)=>{
 }
 )
 
+//this is for notification
+app.get('/customernotification',async(req,res,next)=>{
+  var obj=JSON.parse(req.query.data);    //obj has all the values
+  console.log(`Getting reservation notification data for customer ${obj.customerId} `);
+
+  var sql=`SELECT * FROM reservation WHERE customer_id='${obj.customerId}' AND date='${obj.year}-${obj.month}-${obj.day}' ORDER BY date ASC`;
+
+  const [rows]=await db.query(sql);     //sending the request
+  var len=rows.length;
+  console.log(len)
+
+  res.json(rows);
+  next();
+}
+)
+
 
 //get shop details fro a peticuler shop id
 app.get('/shop',async(req,res,next)=>{
@@ -153,7 +171,7 @@ app.get('/shoplist',async(req,res,next)=>{
 
   console.log(`getting shop details from ${obj.dist}`);
   
-  var sql=`SELECT * FROM salon WHERE district='${obj.dist}'`;
+  var sql=`SELECT * FROM salon WHERE district='${obj.dist}' ORDER BY shop_name ASC`;
   const [rows]=await db.query(sql);
 
   res.json(rows);

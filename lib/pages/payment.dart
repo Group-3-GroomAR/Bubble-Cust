@@ -168,13 +168,16 @@ class _PaymentState extends State<Payment> {
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold))
                         ]),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Edit",
-                        style: TextStyle(color: Colors.blue),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ),
                     )
                   ],

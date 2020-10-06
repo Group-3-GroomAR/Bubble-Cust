@@ -10,6 +10,7 @@ class Reservation {
 
   String _payment_id;
   String _note;
+  int status;
 
   int get resID => _resID;
 
@@ -39,6 +40,19 @@ class Reservation {
       this._payment_id,
       this._note,
       this._salon_id);
+
+  Reservation.status(
+      this._resID,
+      this._date,
+      this._duration,
+      this._start_time,
+      this.end_time,
+      this._total,
+      this.customer_id,
+      this._payment_id,
+      this._note,
+      this._salon_id,
+      this.status);
 
   int get total => _total;
 
