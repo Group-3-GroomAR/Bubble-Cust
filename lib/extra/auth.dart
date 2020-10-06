@@ -4,8 +4,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth auth = FirebaseAuth.instance;
-  getUser() {
-    return this.auth.currentUser();
+
+  String getUser() {
+    String id = "Hi";
+    this.auth.currentUser().then((value) => id = value.uid);
+    return id;
   }
 
   Future<Null> signOutWithGoogle() async {

@@ -4,7 +4,6 @@ import 'package:bubbletest/extra/service.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:bubbletest/pages/Success.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
 
 class Payment extends StatefulWidget {
@@ -24,8 +23,10 @@ class _PaymentState extends State<Payment> {
   DateTime _dateTime;
   List<Service> _serviceList; //abouve 3 variables are for get object
   String _note; //to get notes
-  String _availableTime = "Loading..";
+  String _availableTimeMorning = "Loading..";
+  String _availableTimeEvening = "Loading..";
   String _customerId = "cus2";
+  bool _isevening = false;
 
   _PaymentState(this._shop, this._dateTime, this._serviceList);
 
@@ -59,8 +60,32 @@ class _PaymentState extends State<Payment> {
                   "Available Time:",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
+                subtitle: Wrap(
+                  children: [
+                    Icon(
+                      Icons.wb_sunny,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                    Switch(
+                        activeColor: Colors.white,
+                        value: _isevening,
+                        onChanged: (bool newval) {
+                          setState(() {
+                            _isevening = newval;
+                          });
+                        }),
+                    Icon(
+                      Icons.brightness_3,
+                      size: 40,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
                 trailing: Text(
-                  _availableTime,
+                  _isevening == true
+                      ? _availableTimeEvening.substring(0, 5)
+                      : _availableTimeMorning.substring(0, 5),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               )),
@@ -288,7 +313,8 @@ class _PaymentState extends State<Payment> {
       "day": _dateTime.day,
       "month": _dateTime.month,
       "year": _dateTime.year,
-      "startTime": _availableTime,
+      "startTime":
+          _isevening == true ? _availableTimeEvening : _availableTimeMorning,
       "duration": getDuration(),
       "note": _note,
       "total": getTotal(),
@@ -317,9 +343,13 @@ class _PaymentState extends State<Payment> {
       "week": _dateTime.weekday
     });
 
-    //print("got the data form server ${result.data['time']}");
-    setState(() {
-      _availableTime = result.data['time'];
-    });
+    //print("Song");
+    if (result.ok) {
+      setState(() {
+        _availableTimeMorning = result.data['morning'].toString();
+        _availableTimeEvening = result.data['evening'].toString();
+        print("morning$_availableTimeMorning:evening$_availableTimeEvening");
+      });
+    }
   }
 }

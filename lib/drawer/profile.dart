@@ -1,5 +1,6 @@
 import 'package:bubbletest/backend/http.dart';
 import 'package:bubbletest/drawer/profileedit.dart';
+import 'package:bubbletest/extra/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nice_button/nice_button.dart';
@@ -20,6 +21,8 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     // TODO: implement initState
+    // AuthService obj = AuthService();
+    // print("Getting user${obj.getUser()}");
     getCustomer();
   }
 

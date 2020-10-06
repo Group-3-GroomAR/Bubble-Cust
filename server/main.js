@@ -57,6 +57,12 @@ app.post('/makereservation', async(req, res, next)=>{
 
     var endhour=hour+temphour;
     var endmin=min+tempmin;
+    if(endmin>59)
+    {
+      endhour=endhour+1;
+      var temp=endmin-60;
+      endmin=endmin-temp;
+    }
     console.log(`hour${endhour} min${endmin}`);
 
     var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','${endhour}:${endmin}:00',0,'${req.body.note}')`;
@@ -155,6 +161,69 @@ app.get('/shoplist',async(req,res,next)=>{
 }
 )
 
+// //get the availble time of a date fo the reservation
+// app.get('/availabletime',async(req,res,next)=>{
+//   var obj=JSON.parse(req.query.data);    //obj has all the values
+
+//   console.log(`getting avalable time for ${obj.shopId} at ${obj.day}/${obj.month}/${obj.year}`);    
+
+//   var sql=`SELECT end_time FROM reservation WHERE salon_id='${obj.shopId}' AND date='${obj.year}-${obj.month}-${obj.day}'`;
+//  // var sql=`SELECT end_time FROM reservation WHERE salon_id='ax3' AND date='2020-08-18'`;
+  
+//   const [rows]=await db.query(sql);     //sending the request
+
+//   var len=rows.length;
+//   var availabletime;
+
+//   //this is getting the time 
+//   if(len>0)   //if there is a time 
+//   {
+//     var i;    //this is for loop
+//     var max;
+//     for(i=0;i<len;i++)
+//     {
+//       if(i==0)
+//       {
+//         max=rows[i].end_time;
+//       }
+//       else{
+//         if(rows[i].end_time>max)
+//         {
+//           max=rows[i].end_time;
+//         }
+//       }
+//       // console.log(max);
+//       // console.log(rows[0])
+      
+//     }
+//     availabletime=max;    //setting the max finising time as a available time
+    
+
+//   }
+//   else    //if their is no time in a day or previes reservation
+//   {
+//     var sql2=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
+//     const [row2]=await db.query(sql2);     //sending the request
+//     //console.log(row2[0].is_open);
+
+//     if(row2[0].is_open==1)
+//     {
+//       availabletime=row2[0].open_time;
+//     }
+//     else
+//     {
+//       availabletime=0;
+//     }
+    
+//   }
+
+//   res.send({time:availabletime});
+//   next();
+// }
+// )
+
+
+
 //get the availble time of a date fo the reservation
 app.get('/availabletime',async(req,res,next)=>{
   var obj=JSON.parse(req.query.data);    //obj has all the values
@@ -167,51 +236,122 @@ app.get('/availabletime',async(req,res,next)=>{
   const [rows]=await db.query(sql);     //sending the request
 
   var len=rows.length;
-  var availabletime;
+
+  //this is to pass tha data to client
+  var availabletimemorning;
+  var availabletimeevening;
+
+  //this is to set start end time
+  var morning;
+  var evening;
+
+  var sqlm=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
+  const [rowm]=await db.query(sqlm);     //sending the request
+  morning=rowm[0].open_time;
+
+  var sqle=`SELECT break_end,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
+  const [rowe]=await db.query(sqle);     //sending the request
+  evening=rowe[0].break_end;
+
+  var maxm=morning;
+  var maxe=evening;
+
+
+  
 
   //this is getting the time 
   if(len>0)   //if there is a time 
   {
     var i;    //this is for loop
-    var max;
+    
     for(i=0;i<len;i++)
     {
-      if(i==0)
+      //this is for mornig shedule
+      if(rows[i].end_time<evening)
       {
-        max=rows[i].end_time;
+        
+        // if(maxm=="no")
+        // {
+        //   console.log(`this is ${rows[i].end_time}`)
+        //   maxm=rows[i].end_time;
+        //   print(maxm)
+        // }
+        // else{
+          if(rows[i].end_time>maxm)
+          {
+            //console.log("Problem")
+            maxm=rows[i].end_time;
+          }
+       // }
+
       }
-      else{
-        if(rows[i].end_time>max)
-        {
-          max=rows[i].end_time;
-        }
+      //this is for evening schedule
+      else
+      {
+        // if(maxe==null)
+        // {
+        //   maxe=rows[i].end_time;
+        // }
+        // else{
+          if(rows[i].end_time>maxe)
+          {
+            maxe=rows[i].end_time;
+          }
+        //}
+
+
       }
-      // console.log(max);
-      // console.log(rows[0])
+
+
       
     }
-    availabletime=max;    //setting the max finising time as a available time
+
+    availabletimemorning=maxm;
+    availabletimeevening=maxe;
+
+
+    // if(maxm==null)
+    // {
+    //   availabletimemorning=morning;
+    // }else
+    // {
+    //   availabletimeevening=maxm;
+    // }
+    
+
+    // if(maxe==null)
+    // {
+    //   availabletimeevening=evening;
+    // }else{
+    //   availabletimeevening=maxe;
+    // }
+
+
     
 
   }
   else    //if their is no time in a day or previes reservation
   {
-    var sql2=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
-    const [row2]=await db.query(sql2);     //sending the request
-    //console.log(row2[0].is_open);
+    // var sql2=`SELECT open_time,is_open   FROM time WHERE salon_id='${obj.shopId}' AND day=${obj.week}`;
+    // const [row2]=await db.query(sql2);     //sending the request
+    // //console.log(row2[0].is_open);
 
-    if(row2[0].is_open==1)
+    if(rowm[0].is_open==1)
     {
-      availabletime=row2[0].open_time;
+      availabletimemorning=morning;
+      availabletimeevening=evening;
     }
     else
     {
-      availabletime=0;
+      availabletimemorning=0;
+      availabletimeevening=0;
     }
     
   }
 
-  res.send({time:availabletime});
+  console.log(`morning ${availabletimemorning}: evening ${availabletimeevening}`)
+
+  res.send({morning:availabletimemorning,evening:availabletimeevening});
   next();
 }
 )
