@@ -51,9 +51,27 @@ class _ServicePageState extends State<ServicePage> {
                       child: Container(
                         padding: const EdgeInsets.all(5),
                         child: ListTile(
-                          title: Text(serviceList[index].serviceName),
+                          leading: Wrap(
+                            children: [
+                              serviceList[index].isFemale == 1
+                                  ? Icon(Icons.pregnant_woman)
+                                  : Text(""),
+                              serviceList[index].isMale == 1
+                                  ? Icon(Icons.person)
+                                  : Text(""),
+                              serviceList[index].isChildren == 1
+                                  ? Icon(Icons.child_care)
+                                  : Text(""),
+                            ],
+                          ),
+                          title: Text(
+                            serviceList[index].serviceName,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Text(
-                              "Duration:${serviceList[index].duration}\nPrice:${serviceList[index].price}"),
+                              "Duration:${serviceList[index].duration} min\nPrice:${serviceList[index].price}",
+                              style: TextStyle(fontSize: 17)),
                           trailing: RaisedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
@@ -140,7 +158,7 @@ class _ServicePageState extends State<ServicePage> {
               inService['salon_id'],
               inService['is_male'],
               inService['is_female'],
-              inService['is_childrn'],
+              inService['is_children'],
               inService['service_name'],
               double.parse(inService['price']),
               inService['duration'],

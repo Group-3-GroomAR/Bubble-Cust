@@ -30,26 +30,69 @@ class _AppoinmentState extends State<Appoinment> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.purple,
-      // appBar: AppBar(
-      //   title: const Text('DraggableScrollableSheet'),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.purple, //change your color here
+        ),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Ref No:${makeEncript(_reservation.resID)}",
+          style: TextStyle(
+              color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+      ),
+
+      // body: Container(
+      //   child: Center(
+      //       child: Card(
+      //           color: Colors.white,
+      //           shape: RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(20)),
+      //           elevation: 20,
+      //           child: Container(
+      //             child: QrImage(
+      //               data: makeEncript(_reservation.resID),
+      //               version: QrVersions.auto,
+      //               size: 300.0,
+      //               backgroundColor: Colors.white,
+      //               padding: EdgeInsets.all(10),
+      //             ),
+      //           ))),
       // ),
 
       body: Container(
+        color: Colors.purple,
         child: Center(
-            child: Card(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                elevation: 20,
-                child: Container(
-                  child: QrImage(
-                    data: makeEncript(_reservation.resID),
-                    version: QrVersions.auto,
-                    size: 300.0,
-                    backgroundColor: Colors.white,
-                    padding: EdgeInsets.all(10),
-                  ),
-                ))),
+          child: Wrap(
+            children: [
+              // Center(
+              //   child: Text(
+              //     "Ref No:${makeEncript(_reservation.resID)}",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 30,
+              //         fontWeight: FontWeight.bold),
+              //   ),
+              // ),
+              Center(
+                  child: Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 20,
+                      child: Container(
+                        child: QrImage(
+                          data: makeEncript(_reservation.resID),
+                          version: QrVersions.auto,
+                          size: 300.0,
+                          backgroundColor: Colors.white,
+                          padding: EdgeInsets.all(10),
+                        ),
+                      ))),
+            ],
+          ),
+        ),
       ),
 
       floatingActionButton: RaisedButton(
