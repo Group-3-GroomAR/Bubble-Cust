@@ -1,152 +1,66 @@
 import 'package:bubbletest/backend/http.dart';
+import 'package:bubbletest/extra/reservation.dart';
 import 'package:bubbletest/extra/shop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'moredetails.dart';
-
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key key}) : super(key: key);
-
   @override
   _NotificationState createState() => _NotificationState();
 }
-
 class _NotificationState extends State<NotificationPage> {
-  String _result = "Nothing";
-  List<Shop> shopList = [];
-
+  List<Reservation> reservationList = []; //this is to add all reservation
+  String customerId;
+  @override
+  void initState() {
+    customerId = "cus2";
+    getNotification();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification Panel"),
+        title: Text("Today Event"),
       ),
-      body: Center(
-          child: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 5.0),
-            height: 150.0,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(
-                color: (Color(0xFF674ea7)),
-                width: 3,
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(2),
-                  height: 70,
-                  width: 70,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/salonprofile.jpg')),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 2)),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 2.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 180.0,
-                            child: Text(
-                              //salon.name
-                              'Beauty Salons',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w600,
-                                color: (Color(0xFF674ea7)),
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          )
-                        ],
+      body: Container(
+        child: ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: reservationList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              // margin: EdgeInsets.all(10),
+                child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    elevation: 6,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                      child: ListTile(
+                        leading: Icon(Icons.calendar_today),
+                        title: Text(
+                          reservationList[index].status == 0
+                              ? "Status:Upcoming"
+                              : "Status:Completed",
+                          // "Date:${reservationList[index].date.substring(0, 10)}",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Time:${reservationList[index].start_time}",
+                                style: TextStyle(fontSize: 17)),
+                            Text(
+                                "Duration:${reservationList[index].duration} min",
+                                style: TextStyle(fontSize: 17))
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        //activity.name
-                        "Hair Cutting",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 100.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              color: (Color(0xFF674ea7)),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              //date
-                              "08/08/2020",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Container(
-                            width: 70.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              color: (Color(0xFF674ea7)),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              //time
-                              "9.00 AM",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      RaisedButton(
-                        child: Text("More Details -->"),
-                        onPressed: () {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  new NotificationDetails()));
-                        },
-                        color: Colors.black,
-                        textColor: Colors.white,
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        splashColor: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      )
-          //child: Text(_result),
-          ),
+                    )));
+          },
+        ),
+      ),
       /*floatingActionButton: FloatingActionButton(
           onPressed: () {
             print("reqest begin");
@@ -160,24 +74,42 @@ class _NotificationState extends State<NotificationPage> {
           child: Icon(Icons.network_wifi)),*/
     );
   }
-
-  //this is to get shop details
-  Future<void> getShop() async {
-    var result = await httpGet('shop');
+  Future<void> getNotification() async {
+    var result = await httpGet('customernotification', {
+      "customerId": customerId,
+      "day": new DateTime.now().day,
+      "month": new DateTime.now().month,
+      "year": new DateTime.now().year
+    });
     if (result.ok) {
-      //this is checking true or not
+      print("History reservation details recived to Main");
       setState(() {
-        shopList.clear();
-        var in_shop = result.data as List<dynamic>;
-        in_shop.forEach((in_shop) {
-          shopList.add(Shop(in_shop['salon_id'], in_shop['shop_name'],
-              in_shop['salon_address'], in_shop['district']));
+        reservationList.clear();
+        var inRes = result.data as List<dynamic>;
+        inRes.forEach((inRes) {
+          reservationList.add(Reservation(
+              inRes['id'],
+              inRes['date'],
+              inRes['duration'],
+              inRes['start_time'],
+              inRes['end_time'],
+              inRes['total'],
+              inRes['customer_id'],
+              inRes['payment_id'],
+              inRes['note'],
+              inRes['salon_id']));
+          //print(in_shop['contact'].toString());
         });
-        print(shopList.length.toString());
-        print(shopList[0].shopName);
-        print(shopList[1].shopName);
-        print(shopList[2].shopName);
+        print("Length of history${reservationList.length.toString()}");
+        // createUI();
       });
+    } else if (!result.ok) {
+      // final snackBar = SnackBar(content: Text('Connection Error'));
+      // Scaffold.of(context).showSnackBar(snackBar);
+      reservationList.clear();
+      setState(() {});
+      print("Unable to get data to Main");
     }
+    print(result.data);
   }
 }
