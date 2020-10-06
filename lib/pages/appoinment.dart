@@ -66,15 +66,6 @@ class _AppoinmentState extends State<Appoinment> {
         child: Center(
           child: Wrap(
             children: [
-              // Center(
-              //   child: Text(
-              //     "Ref No:${makeEncript(_reservation.resID)}",
-              //     style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 30,
-              //         fontWeight: FontWeight.bold),
-              //   ),
-              // ),
               Center(
                   child: Card(
                       color: Colors.white,

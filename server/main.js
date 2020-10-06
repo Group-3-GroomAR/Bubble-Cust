@@ -47,11 +47,21 @@ app.post('/makereservation', async(req, res, next)=>{
     {
       console.log(service[i])
     }
-    console.log(req.body.service);
+    var startTime=req.body.startTime;
+    var hour=parseInt(startTime.substring(0,2));
+    var min=parseInt(startTime.substring(3,5));
+    
+    //this is to get min and hour separately
+    var temphour=parseInt(req.body.duration/60);
+    var tempmin=req.body.duration%60;
 
-    var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','11:00:00',0,'${req.body.note}')`;
+    var endhour=hour+temphour;
+    var endmin=min+tempmin;
+    console.log(`hour${endhour} min${endmin}`);
+
+    var sql=`INSERT INTO reservation(salon_id,customer_id,payment_id,	total,date,start_time,duration,end_time,status,note) VALUES('${req.body.shopId}','${req.body.customerId}','${req.body.paymentId}','${req.body.total}','${req.body.year}-${req.body.month}-${req.body.day}','${req.body.startTime}','${req.body.duration}','${endhour}:${endmin}:00',0,'${req.body.note}')`;
     const row=await db.query(sql);     //sending the request
-    console.log(row);
+    //console.log(row);
   
     res.send({status:"OK"});
     next();
