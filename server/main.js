@@ -37,6 +37,17 @@ app.post('/tom', async(req, res, next)=>{
   next();
 });
 
+app.post('/changecustomer', async(req, res, next)=>{
+
+    console.log("Getting tom");
+  
+    var sql=`INSERT INTO customer(customer_name,customer_gender,customer_district,customer_phone) VALUES('${req.body.name}','${req.body.gender}','${req.body.district}',${req.body.phone}) WHERE customer_id='${req.body.customerId}'`;
+    var [row]=await db.query(sql);
+    res.send({status:"OK"});
+    next();
+  });
+  
+
 
 app.post('/makereservation', async(req, res, next)=>{
     console.log(`Making Reservation for ${req.body.customerId} at ${req.body.shopId}`);

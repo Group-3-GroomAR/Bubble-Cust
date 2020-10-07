@@ -261,14 +261,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 leading: Icon(Icons.notifications_none),
                 title: Text('Notification',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
-              ListTile(
-                leading: Icon(Icons.payment),
-                title: Text('Payment',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
                 onTap: () {
                   Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (BuildContext context) => new Payment()));
+                      builder: (BuildContext context) =>
+                          new NotificationPage()));
                 },
               ),
               ListTile(
@@ -292,12 +288,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               (BuildContext context) => new LoginScreen()));
                       },
                     ),*/
-
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
             ],
           ),
         ));
