@@ -1,0 +1,27 @@
+﻿Software license - GroomAR
+        
+This Software license is Made by GroomAR to the End User as an essential element of the services to be rendered by GroomAR as defined in the system specification and any associated documents and agreement. The system shall mean the deliverable product as defined in these documents. 
+
+
+Any intellectual or industrial property rights and any other exclusive rights on software or technical applications embedded in or related to this Application are held by GroomAR.
+
+
+GroomAR hereby grants to Users a non-exclusive,non-transferable and non-sublicensable license to use the software and, or any other technical means embedded in the service within the scope and for the purposes of this application and the service offered..software shall mean executable object code of software programs and the patches, scripts, modifications, enhancements, designs, concepts or other materials that constitute the software programs necessary for the proper function and operation of the system as delivered by GroomAR and accepted by the Customer.
+
+
+This license does not grant Users any rights to access, usage or disclosure of the original source code. All techniques, algorithms, and the procedures contained in the software and any documentation thereto related is the GroomAR sole property.
+
+
+Users may not, 
+* modify, translate, or create derivative works based on the software.
+* Reverse engineer or use the Software in order to (a) build a competitive product or service,(b) Build a product using similar ideas, features or functions of the software or (c)  copy any ideas, features or functions of the Software.
+
+
+Under this license Users may download, install, use and run the software on any number of devices, provided that such devices are common and up-to-date in terms of technology and market standards.
+
+
+GroomAR reserves the right to release updates, fixes and further developments of these applications and/or its related software and to provide them to Users for free. Users may need to download and install such updates to continue using this application and/or its related software.
+
+
+BY INSTALLING OR USING THIS SOFTWARE GROOMAR , THE INDIVIDUAL IF ACTING ON BEHALF OF HIMSELF OR HERSELF OR THE INDIVIDUAL WHO IS ACTING ON BEHALF OF A SALON IS AGREEING TO BE BOUND BY THIS SOFTWARE LICENSE AGREEMENT.
+IF THE END USER DOES NOT AGREE TO THE TERMS OF THIS AGREEMENT, THE END USER MAY NOT INSTALL OR USE THE LICENSED SOFTWARE.
